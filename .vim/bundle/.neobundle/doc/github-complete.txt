@@ -1,0 +1,399 @@
+*github-complete.vim*       Completions for GitHub things.
+
+Author : rhysd <lin90162@yahoo.co.jp>
+Version : 0.2.0
+
+CONTENTS                *github-complete.vim-contents*
+
+Introduction            |github-complete.vim-introduction|
+Install                 |github-complete.vim-install|
+Usage                   |github-complete.vim-usage|
+  Emoji Completion        |github-complete.vim-usage-eomji-completion|
+  Issue Completion        |github-complete.vim-usage-issue-completion|
+  User Name Completion    |github-complete.vim-usage-user-name-completion|
+  Repository Completion   |github-complete.vim-usage-repository-completion|
+  Link URL Completion     |github-complete.vim-usage-link-completion|
+Variables               |github-complete.vim-variables|
+Mappings                |github-complete.vim-mappings|
+Neocomplete Sources     |github-complete.vim-neocomplete-sources|
+Recommended Plugin      |github-complete.vim-recommended-plugin|
+Repository              |github-complete.vim-repository-page|
+License                 |github-complete.vim-lisence|
+
+==============================================================================
+INTRODUCTION                                  *github-complete.vim-introduction*
+
+
+*github-complete* is a completion plugin to complete things related to GitHub.
+It generates, caches and contextually shows candidates of completion via
+GitHub API.
+|github-complete| provides below completions.
+
+- Emoji completion
+- Issue completion
+- User name completion
+- Repository name completion
+- Link URL completion
+
+
+==============================================================================
+INSTALL                                            *github-complete.vim-install*
+
+If you don't use any plugin manager, copy all files in autoload/, plugin/ and
+ftplugin/ to your .vim directory.
+
+If you use a plugin manager, please follow the instruction of it to install
+|github-complete|.
+
+In order to use asynchronous communication with GitHub API, please install
+vimproc.vim in advance.
+
+https://github.com/Shougo/vimproc.vim
+
+Note: They are optional.  Installing them is not mandatory to use
+|github-complete| but I recommend it.
+
+Below is an example for |neobundle.vim|.
+>
+    NeoBundle 'Shougo/vimproc.vim'
+    NeoBundle 'rhysd/github-complete.vim'
+<
+|github-complete| uses "curl" or "wget" command to send requests to GitHub
+API.  Please make sure to install at least one of them in your system. (They
+are usually pre-installed in *nix system.)
+
+
+==============================================================================
+USAGE                                                *github-complete.vim-usage*
+
+|github-complete| set 'omnifunc' when no other omnifunc is set on filetypes
+"gitcommit" and "markdown".  In the case, you need not to setup any
+configuration.  Otherwise, set "github_complete#complete" to 'omnifunc' in
+your favorite filetypes in your |vimrc|.
+Please make sure the proper 'omnifunc' is set with ":set omnifunc" in intended
+filetypes.
+For example, following code sets 'omnifunc' in "gitcommit" filetype
+>
+    augroup config-github-complete
+        autocmd!
+        autocmd FileType gitcommit setl omnifunc=github_complete#complete
+    augroup END
+<
+Now you can use contextual completions with <C-X><C-O>.  I'll show an example
+use cases for each completion.
+                                                               |i_CTRL-X_CTRL-O|
+
+Note: "_" means the place of the cursor
+
+------------------------------------------------------------------------------
+EMOJI COMPLETION                    *github-complete.vim-usage-eomji-completion*
+
+When the cursor is after ":", |github-complete| invokes emoji completion.
+If your font can deal with unicode emojis, the items of completion show the
+corresponding emojis.
+>
+    I am a :do_
+<
+<C-X><C-O> here will show the list of emoji which starts with ":do".  Possible
+result of completion is below.
+>
+    I am a :dog:_
+<
+
+------------------------------------------------------------------------------
+ISSUE COMPLETION                    *github-complete.vim-usage-issue-completion*
+
+When the cursor is after "#", |github-complete| invokes issue number completion.
+You can select an issue with looking the issue titles in items of completion.
+>
+    I fixed #_
+<
+<C-X><C-O> here will show the list of issues for current repository.  Possible
+result of completion is below.
+>
+    I fixed #13_
+<
+
+------------------------------------------------------------------------------
+USER NAME COMPLETION            *github-complete.vim-usage-user-name-completion*
+
+When the cursor is after "@" or "github.com/", |github-complete| invokes
+GitHub user name completion.
+>
+       Hi, @rh_
+<
+<C-X><C-O> here will show the list of user name which starts with "rh".
+Possible result of completion is below.
+>
+    Hi, @rhysd_
+<
+
+------------------------------------------------------------------------------
+REPOSITORY COMPLETION          *github-complete.vim-usage-repository-completion*
+
+When the cursor is after the format {user name}/{some query}, |github_complete|
+invokes GitHub repository completion.  It shows repositories which {user name}
+owns.
+>
+    Please see github.com/rhysd/cle_
+<
+<C-X><C-O> here will show the list of repository which rhysd owns and which
+starts with "cle".  Possible result of completion is below.
+>
+    Please see github.com/rhysd/clever-f.vim
+<
+
+------------------------------------------------------------------------------
+LINK URL COMPLETION                  *github-complete.vim-usage-link-completion*
+
+When writing link to GitHub repository in markdown, you can complete its URL
+by the title of link.
+
+On writing "[something](",
+>
+    Please try [clever-f.vim](
+<
+<C-X><C-O> searches GitHub repositories by its
+title "something" and shows the result.  You can choose one to complete URL
+of the link.
+>
+    Please try [clever-f.vim](https://github.com/rhysd/clever-f.vim
+<
+
+==============================================================================
+VARIABLES                                        *github-complete.vim-variables*
+
+|github-complete| provides many variables to customize the behavior of
+completions.
+
+g:github_complete_overwrite_omnifunc_filetypes
+                                *g:github_complete_overwrite_omnifunc_filetypes*
+
+    |filetype|s can be set to the variable as a |List| of |string|.  When you
+    open the buffer whose filetype is included in the variable, 'omnifunc'
+    would be overwritten by "github_complete#complete" automatically even if
+    other omni function is already set.
+    Default value is [].
+
+    e.g.
+>
+    let g:github_complete_overwrite_omnifunc_filetypes = ["gitcommit"]
+<
+g:github_complete_enable_neocomplete      *g:github_complete_enable_neocomplete*
+
+    Setting 1 to the variable enables all neocomplete sources by default.
+    See |github-complete.vim-neocomplete-sources| for more detail.
+    Default value is 0.
+
+g:github_complete_enable_emoji_completion
+                                     *g:github_complete_enable_emoji_completion*
+
+    Setting 1 to the variable enables emoji completion.
+    Default value is 1.
+
+g:github_complete_enable_issue_completion
+                                     *g:github_complete_enable_issue_completion*
+
+    Setting 1 to the variable enables issue number completion.
+    Default value is 1.
+
+g:github_complete_enable_user_completion
+                                      *g:github_complete_enable_user_completion*
+
+    Setting 1 to the variable enables GitHub user completion.
+    Default value is 1.
+
+g:github_complete_enable_repo_completion
+                                      *g:github_complete_enable_repo_completion*
+
+    Setting 1 to the variable enables GitHub repository name completion.
+    Default value is 1.
+
+g:github_complete_include_issue_title    *g:github_complete_include_issue_title*
+
+    When 1 is set to the variable, item of issue number completion includes
+    the title of issue.  If you want to include the title of issue in your
+    writing text, it may be helpful.
+    Default value is 0.
+
+g:github_complete_max_issue_candidates
+                                        *g:github_complete_max_issue_candidates*
+
+    When the repository is very big, issue number completion takes much time
+    because of many issues.  This variable limits the number of candidates of
+    issue number completion.  When non-positive number is set, it means no
+    limit.
+    Default value is 100.
+
+g:github_complete_git_cmd                            *g:github_complete_git_cmd*
+
+    The command name of git.  It is used to look up the information of current
+    repository.
+    Default value is "git".
+
+g:github_complete_fetch_issue_api_filetypes
+                                   *g:github_complete_fetch_issue_api_filetypes*
+
+    The list of filetypes to fetch GitHub issue API call.  When the filetype
+    is set, |github-complete| instantly sends issue API call in the background.
+    After you consider your nice commit message, the API call might already be
+    done and you can use issue number completion instantly.
+    However, it takes a bit at setting the filetype because it sends API call
+    every time the filetype is set.
+    Default value is [ "gitcommit" ].
+
+g:github_complete_emoji_japanese_workaround
+                                   *g:github_complete_emoji_japanese_workaround*
+
+    Some environments can't show emoji in item of emoji completion.  When this
+    variable is set to 1, |github-complete| provides the workaround for the
+    description of items of emoji completion.  It shows a description of
+    the corrensponding item of completion in Japanese.
+    For example, when you input ":do", items are shown such as ":dog2: -> 犬".
+    Default value is 0.
+
+g:github_complete_fallback_omnifunc        *g:github_complete_fallback_omnifunc*
+
+    If a name of some function is set to the variable, |github-complete| uses
+    the function when no completion is available.  If an empty string is set,
+    |github-complete| invokes emoji completion and issue completion at the
+    same time.
+    If you already use omni function foo_bar#complete() and also want to use
+    |github-complete| at the same time, set "foo_bar#complete" to the variable
+    might help you.
+    Default value is "".
+
+    e.g.
+>
+    let g:github_complete_fallback_omnifunc = "some#other#complete"
+<
+g:github_complete_enable_api_cache          *g:github_complete_enable_api_cache*
+
+    If this variable is set to 1, |github-complete| caches the result of
+    GitHub API call.  Otherwise, it doesn't.
+    Default value is 1.
+
+g:github_complete_enable_omni_completion
+                                      *g:github_complete_enable_omni_completion*
+
+    If this variable is set to 1, github-complete.vim automatically defines
+    'omnifunc' on "gitcommit", "markdown" and "magit" filetypes.
+    Default value is 1.
+
+g:github_complete_github_api_token          *g:github_complete_github_api_token*
+
+    You can specify a token for GitHub API as string.  If you obtain a token
+    with properly scopes, github-complete.vim will have the ability to access
+    to private repositories.  And API rate limit is increased to 5000 from 60
+    per hour.
+    This value is set to environmental variable $GITHUB_API_TOKEN.  If it is
+    empty, simply empty string is set.  When empty string is set,
+    github-complete.vim won't use a token to call GitHub API.
+
+    To obtain GitHub API token, please access GitHub page as below:
+
+        1. Access to https://github.com
+        2. Click your icon and select 'Settings' in pull-down menu.
+        3. Select 'Personal access tokens' tab.
+        4. Click 'Generate new token' button.
+        5. Specify properly scopes. (If you don't want to access private
+           repository, select nothing.)
+        6. Click 'Genrate token' button and copy the displayed token.
+
+    Note: Please do not expose your token.  It's secret.
+
+==============================================================================
+MAPPINGS                                          *github-complete.vim-mappings*
+
+<Plug>(github-complete-manual-completion)
+                                     *<Plug>(github-complete-manual-completion)*
+
+    This mapping starts completion manually.  You can define custom mapping to
+    use completions of github-complete.vim rather than omni completion.  This
+    mapping is defined only in insert mode. >
+
+    " Disable overwriting 'omnifunc'
+    let g:github_complete_enable_omni_completion = 0
+    " <C-x><C-x> invokes completions of github-complete.vim
+    autocmd FileType markdown,gitcommit
+        \ imap <C-x><C-x> <Plug>(github-complete-manual-completion)
+<
+
+==============================================================================
+NEOCOMPLETE SOURCES                    *github-complete.vim-neocomplete-sources*
+
+|github-complete| includes the sources of |neocomplete|.
+
+https://github.com/Shougo/neocomplete.vim
+
+You can use below sources via neocomplete's automatic completion.
+
+- "github_emoji" ... Emoji completion after ":"
+- "github_issue" ... Issue number completion after "#"
+- "github_user"  ... User completion after "@" or "github.com/"
+- "github_repo"  ... Repository completion after "{user name}/"
+
+You can enable all sources by setting |g:github_complete_enable_neocomplete|
+to 1.  When it is set to 1, sources would be enabled in "gitcommit" and
+"markdown" filetypes.  If you want to control enabling individual sources,
+please see documentation of neocomplete and use neocomplete's way.
+
+Note: Above neocomplete sources are not tested yet because I don't know how to
+do that.  They may be buggy.
+
+Note: |neocomplete| invoke completion automatically.  Sometimes too many API
+calls are sent to GitHub API and some requests may be denied. (Their response
+will be 403.)
+
+==============================================================================
+RECOMMENDED PLUGIN                      *github-complete.vim-recommended-plugin*
+
+* github-issues.vim
+
+https://github.com/jaxbot/github-issues.vim
+
+This plugin treats GitHub issues in Vim.  Note that github-issues.vim provides
+its own omni completion.  You should set g:github_issues_no_omni and set
+'omnifunc' to "github_complete#complete" in issue buffers to use
+|github-complete|.
+
+
+==============================================================================
+REPOSITORY PAGE                            *github-complete.vim-repository-page*
+
+The repository of |github-completion| is hosted in GitHub.
+
+https://github.com/rhysd/github-complete.vim
+
+If you've found a bug or have some questions, do not hesitate to open an
+issue.
+And pull requests are always welcome.  No pull request is too small!
+
+==============================================================================
+LICENSE                                            *github-complete.vim-license*
+
+|github-complete| is distributed under The MIT license.
+
+  Copyright (c) 2015 rhysd
+
+  Permission is hereby granted, free of charge, to any person obtaining
+  a copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to
+  permit persons to whom the Software is furnished to do so, subject to
+  the following conditions:
+  The above copyright notice and this permission notice shall be
+  included in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+==============================================================================
+vim:tw=78:colorcolumn=78:ts=8:ft=help:norl:et:fen:fdl=0:
