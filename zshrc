@@ -1,4 +1,4 @@
-export ZSH=/home/unsigned/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="dallas"
 
@@ -12,7 +12,7 @@ alias upgrade='sudo apt-get upgrade'
 alias install='sudo apt-get install'
 alias mk='make -j'
 
-alias vim='/usr/local/bin/vim'
+# alias vim='/usr/local/bin/vim'
 
 alias grep='grep -nE --color=always'
 alias -g L='|less'
