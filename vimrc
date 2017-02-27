@@ -28,12 +28,12 @@ imap <C-l> <Right>
 set backspace=indent,eol,start 
 " inoremap {<Enter> {}<Left><CR><ESC><S-o>
 " colorscheme
-set background=dark
+set t_Co=256
 colorscheme solarized8_dark
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-set t_Co=256
+set background=dark
 
 " if (empty($TMUX))
 " 	if (has("nvim"))
@@ -81,7 +81,6 @@ NeoBundleLazy 'vim-jp/cpp-vim', {
             \ }
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_scope_highlight = 1
-let g:cpp_experimental_template_highlight = 1
 NeoBundle 'Shougo/neoinclude.vim'
 NeoBundle 'Shougo/vimproc'
 " NeoBundle 'tomtom/tcomment_vim'
@@ -101,6 +100,8 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 " let g:indent_guides_enable_on_vim_startup=1
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'rust-lang/rust.vim'
+NeoBundle 'racer-rust/vim-racer'
 
 call neobundle#end()
 
@@ -236,10 +237,15 @@ let g:clang_complete_copen = 1
 let g:clang_complete_auto = 1
 let g:clang_use_library = 1
 
-let g:clang_library_path = '/usr/lib/llvm-3.5/lib'
+let g:clang_library_path = '/usr/lib/llvm-3.8/lib'
 " specify compiler options
-let g:clang_user_options = '-std=c++11 `llvm-config-3.5 --cppflags`'
-let g:clang_cpp_options = '-std=c++11 `llvm-config-3.5 --cppflags`'
+let g:clang_user_options = '-std=c++11 `llvm-config-3.8 --cppflags`'
+let g:clang_cpp_options = '-std=c++11 `llvm-config-3.8 --cppflags`'
 let g:clang_auto = 0
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
+
+" for vim-racer
+set hidden
+let g:racer_cmd = "~/.cargo/bin"
+let g:racer_experimental_completer = 1
