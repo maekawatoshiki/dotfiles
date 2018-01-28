@@ -49,3 +49,13 @@ tmpspace() {
   d=$(mktemp -d "${TMPDIR:-/tmp}/${1:-tmpspace}.XXXXXXXXXX") && cd "$d" || exit 1
   "$SHELL"
 }
+
+rustkcov() {
+  DIRNAME=${PWD##*/}
+  REPORT=$(find ./target/debug -maxdepth 1 -name "$DIRNAME-*" -a ! -name '*.d')
+  echo $REPORT | while read file; do
+  # for file in $REPORT; do  
+    echo $file
+    /usr/local/bin/kcov --include-pattern=$DIRNAME/src --exclude-pattern=/.cargo ./target/cov "$file"
+  done
+}
