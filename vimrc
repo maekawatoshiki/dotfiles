@@ -66,6 +66,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " NeoBundle 'vim-jp/cpp-vim'
 " NeoBundle 'scrooloose/syntastic.git'
 " let g:syntastic_check_on_wq = 0
+NeoBundle 'luochen1990/rainbow'
+let g:rainbow_active = 1
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
