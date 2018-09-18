@@ -12,6 +12,7 @@ let lisp_rainbow=1
 syntax on
 nnoremap / /\v
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
+nnoremap <Esc>r :RustFmt<CR><Esc>
 nnoremap vg :vimgrep /\v
 nnoremap s :%s /
 nnoremap ,t :tabnew<CR>
@@ -109,7 +110,7 @@ set hidden
 let g:racer_cmd = "/home/unsigned/.cargo/bin/racer"
 let g:racer_experimental_completer = 1
 " for rustfmt
-let g:rustfmt_autosave = 1
+" let g:rustfmt_autosave = 1
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 
 call neobundle#end()
@@ -128,7 +129,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'default',
+			\ 'colorscheme': 'wombat',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -257,4 +258,3 @@ let g:clang_cpp_options = '-std=c++11 `llvm-config-3.9 --cppflags`'
 let g:clang_auto = 0
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
-
