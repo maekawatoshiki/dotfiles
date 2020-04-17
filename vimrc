@@ -9,10 +9,9 @@ set title
 set nowrap
 set expandtab
 let lisp_rainbow=1
-syntax on
 nnoremap / /\v
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
-nnoremap <Esc>r :RustFmt<CR><Esc>
+nnoremap <C-b> :RustFmt<CR><Esc>
 nnoremap vg :vimgrep /\v
 nnoremap s :%s /
 nnoremap ,t :tabnew<CR>
@@ -26,9 +25,10 @@ imap <C-k> <Up>
 imap <C-h> <Left>
 imap <C-l> <Right>
 set backspace=indent,eol,start 
+set rnu
 " colorscheme
 set t_Co=256
-colorscheme neodark
+colorscheme deus
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -66,8 +66,32 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " NeoBundle 'vim-jp/cpp-vim'
 " NeoBundle 'scrooloose/syntastic.git'
 " let g:syntastic_check_on_wq = 0
+
+" NeoBundle 'tyru/eskk.vim'
+" let g:eskk#directory = "~/.eskk"
+" let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
+" let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp', }
+" let g:eskk#enable_completion = 1
+NeoBundle 'lervag/vimtex'
+let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
+let g:vimtex_quickfix_open_on_warning = 0
+augroup set_latex_compiler
+  autocmd!
+  autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
+augroup END
+
+filetype plugin indent on
+
+NeoBundle 'vim-scripts/gtags.vim'
+
+NeoBundle 'qnighy/satysfi.vim'
 NeoBundle 'luochen1990/rainbow'
 let g:rainbow_active = 1
+NeoBundle 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+      \ }
+
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
@@ -105,19 +129,33 @@ NeoBundle 'marcus/rsense'
 
 " for Rust
 NeoBundle 'rust-lang/rust.vim'
-NeoBundle 'racer-rust/vim-racer'
 NeoBundle 'rust-lang-nursery/rustfmt'
+NeoBundle 'prabirshrestha/async.vim'
+NeoBundle 'prabirshrestha/vim-lsp'
+NeoBundle 'prabirshrestha/asyncomplete.vim'
+NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
+
+if executable('rls')
+      au User lsp_setup call lsp#register_server({
+              \ 'name': 'rls',
+              \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+              \ 'whitelist': ['rust'],
+              \ })
+    endif 
+
+
+" let g:LanguageClient_autoStart = 
 " for vim-racer
-set hidden
-let g:racer_cmd = "/home/unsigned/.cargo/bin/racer"
-let g:racer_experimental_completer = 1
+" NeoBundle 'racer-rust/vim-racer'
+" set hidden
+" let g:racer_cmd = "/home/unsigned/.cargo/bin/racer"
+" let g:racer_experimental_completer = 1
+
 " for rustfmt
 " let g:rustfmt_autosave = 1
 let g:rustfmt_command = '$HOME/.cargo/bin/rustfmt'
 
 call neobundle#end()
-
-filetype plugin indent on
 
 NeoBundleCheck
 
@@ -260,3 +298,5 @@ let g:clang_cpp_options = '-std=c++11 `llvm-config-3.9 --cppflags`'
 let g:clang_auto = 0
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
+
+syntax on
