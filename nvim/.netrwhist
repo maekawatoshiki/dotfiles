@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/home/unsigned/.config/nvim/plugins'
+let g:netrw_dirhist_9='/home/unsigned/.vim'
+let g:netrw_dirhist_8='/home/unsigned/.config/nvim'
+let g:netrw_dirhist_7='/home/unsigned/.config/nvim/plugins'
+let g:netrw_dirhist_6='/home/unsigned/.config/nvim'
+let g:netrw_dirhist_5='/home/unsigned/.config/nvim/plugins'
+let g:netrw_dirhist_4='/home/unsigned/.config/nvim/colors'
+let g:netrw_dirhist_3='/home/unsigned/.config/nvim'
+let g:netrw_dirhist_2='/home/unsigned/.config/nvim/plugins'
+let g:netrw_dirhist_1='/home/unsigned/.config/nvim'
