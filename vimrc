@@ -11,7 +11,7 @@ set expandtab
 let lisp_rainbow=1
 nnoremap / /\v
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
-nnoremap <C-b> :RustFmt<CR><Esc>
+nnoremap <C-b> :RustFmt<CR>:w<CR>
 nnoremap vg :vimgrep /\v
 nnoremap s :%s /
 nnoremap ,t :tabnew<CR>
@@ -28,7 +28,7 @@ set backspace=indent,eol,start
 set rnu
 " colorscheme
 set t_Co=256
-colorscheme deus
+colorscheme rigel
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -83,7 +83,6 @@ augroup END
 filetype plugin indent on
 
 NeoBundle 'vim-scripts/gtags.vim'
-
 NeoBundle 'qnighy/satysfi.vim'
 NeoBundle 'luochen1990/rainbow'
 let g:rainbow_active = 1
@@ -131,7 +130,7 @@ NeoBundle 'marcus/rsense'
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'rust-lang-nursery/rustfmt'
 NeoBundle 'prabirshrestha/async.vim'
-NeoBundle 'prabirshrestha/vim-lsp'
+NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
 NeoBundle 'prabirshrestha/asyncomplete.vim'
 NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
 
@@ -139,9 +138,10 @@ if executable('rls')
       au User lsp_setup call lsp#register_server({
               \ 'name': 'rls',
               \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+              "\ 'workspace_config': {'cfg_test': 'true'},
               \ 'whitelist': ['rust'],
               \ })
-    endif 
+  endif 
 
 
 " let g:LanguageClient_autoStart = 
@@ -236,6 +236,7 @@ function! g:Exitvim()
 endfunction
 
 autocmd VimEnter * nested if @% == '' && s:GetBufByte() == 0 | source ~/.vimsession | endif
+
 function! s:GetBufByte()
 	let byte = line2byte(line('$') + 1)
 	if byte == -1
