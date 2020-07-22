@@ -2,39 +2,39 @@ if &compatible
   set nocompatible
 endif
 " Add the dein installation directory into runtimepath
-set runtimepath+=~/.dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=$HOME/.dein/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('~/.dein')
-  call dein#begin('~/.dein')
+if dein#load_state('$HOME/.dein')
+  call dein#begin('$HOME/.dein')
 
-  call dein#add('~/.dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('$HOME/.dein/repos/github.com/Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   " my own plugins
-  call dein#add('scrooloose/nerdtree'                 , {'lazy': 1})
-  call dein#add('luochen1990/rainbow'                 , {'lazy': 1})
-  call dein#add('ctrlpvim/ctrlp.vim'                  , {'lazy': 1})
-  call dein#add('h1mesuke/vim-alignta'                , {'lazy': 1})
-  call dein#add('tpope/vim-fugitive'                  , {'lazy': 1})
-  call dein#add('rhysd/wandbox-vim'                   , {'lazy': 1})
-  call dein#add('thinca/vim-ref'                      , {'lazy': 1})
-  call dein#add('justmao945/vim-clang'                , {'lazy': 1})
-  call dein#add('mattn/vim-vimstreamer'               , {'lazy': 1})
-  call dein#add('rhysd/github-complete.vim'           , {'lazy': 1})
-  call dein#add('octol/vim-cpp-enhanced-highlight'    , {'lazy': 1})
-  call dein#add('vim-scripts/taglist.vim'             , {'lazy': 1})
-  call dein#add('kannokanno/previm'                   , {'lazy': 1})
-  call dein#add('tyru/open-browser.vim'               , {'lazy': 1})
-  call dein#add('kana/vim-submode'                    , {'lazy': 1})
-  call dein#add('nathanaelkane/vim-indent-guides'     , {'lazy': 1})
-  call dein#add('airblade/vim-gitgutter'              , {'lazy': 1})
-  call dein#add('itchyny/lightline.vim'               , {'lazy': 1})
-  call dein#add('tyru/caw.vim'                        , {'lazy': 1})
-  call dein#add('rust-lang/rust.vim'                  , {'lazy': 1})
-  call dein#add('rust-lang-nursery/rustfmt'           , {'lazy': 1})
-  call dein#add('prabirshrestha/async.vim'            , {'lazy': 1})
-  call dein#add('prabirshrestha/vim-lsp'              , {'lazy': 1})
-  call dein#add('prabirshrestha/asyncomplete.vim'     , {'lazy': 1})
-  call dein#add('prabirshrestha/asyncomplete-lsp.vim' , {'lazy': 1})
+  call dein#add('scrooloose/nerdtree'                 )
+  call dein#add('luochen1990/rainbow'                 )
+  call dein#add('ctrlpvim/ctrlp.vim'                  )
+  call dein#add('h1mesuke/vim-alignta'                )
+  call dein#add('tpope/vim-fugitive'                  )
+  call dein#add('rhysd/wandbox-vim'                   )
+  call dein#add('thinca/vim-ref'                      )
+  call dein#add('justmao945/vim-clang'                )
+  call dein#add('mattn/vim-vimstreamer'               )
+  call dein#add('rhysd/github-complete.vim'           )
+  call dein#add('octol/vim-cpp-enhanced-highlight'    )
+  call dein#add('vim-scripts/taglist.vim'             )
+  call dein#add('kannokanno/previm'                   )
+  call dein#add('tyru/open-browser.vim'               )
+  call dein#add('kana/vim-submode'                    )
+  call dein#add('nathanaelkane/vim-indent-guides'     )
+  call dein#add('airblade/vim-gitgutter'              )
+  call dein#add('itchyny/lightline.vim'               )
+  call dein#add('tyru/caw.vim'                        )
+  call dein#add('rust-lang/rust.vim'                  )
+  call dein#add('rust-lang-nursery/rustfmt'           )
+  call dein#add('prabirshrestha/async.vim'            )
+  call dein#add('prabirshrestha/vim-lsp'              )
+  call dein#add('prabirshrestha/asyncomplete.vim'     )
+  call dein#add('prabirshrestha/asyncomplete-lsp.vim' )
 
   call dein#end()
   call dein#save_state()
@@ -46,7 +46,7 @@ endif
 
 filetype plugin indent on
 syntax enable
-colorscheme deus
+colorscheme rigel
 set termguicolors
 set belloff=all
 set rnu
@@ -78,6 +78,10 @@ imap <C-k> <Up>
 imap <C-h> <Left>
 imap <C-l> <Right>
 set backspace=indent,eol,start 
+
+" LSP
+let g:lsp_diagnostics_enabled = 0
+
 
 " NERDTree 
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
