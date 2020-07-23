@@ -50,9 +50,9 @@ hi CursorLineNr cterm=NONE ctermfg=232
 
 if has("autocmd")
 	autocmd BufReadPost *
-		\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-		\   exe "normal! g'\"" |
-		\ endif
+				\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+				\   exe "normal! g'\"" |
+				\ endif
 endif
 
 " Setting NeoBundle
@@ -76,8 +76,8 @@ NeoBundle 'lervag/vimtex'
 let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
 let g:vimtex_quickfix_open_on_warning = 0
 augroup set_latex_compiler
-  autocmd!
-  autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
+	autocmd!
+	autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
 augroup END
 
 filetype plugin indent on
@@ -88,8 +88,8 @@ NeoBundle 'luochen1990/rainbow'
 let g:rainbow_active = 1
 NeoBundle 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
-      \ }
+			\ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+			\ }
 
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'scrooloose/nerdtree'
@@ -100,8 +100,8 @@ NeoBundle 'justmao945/vim-clang'
 NeoBundle 'mattn/vim-vimstreamer'
 NeoBundle 'rhysd/github-complete.vim'
 NeoBundleLazy 'vim-jp/cpp-vim', {
-            \ 'autoload' : {'filetypes' : 'cpp'}
-            \ }
+			\ 'autoload' : {'filetypes' : 'cpp'}
+			\ }
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_scope_highlight = 1
 NeoBundle 'Shougo/neoinclude.vim'
@@ -135,19 +135,26 @@ NeoBundle 'prabirshrestha/asyncomplete.vim'
 NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
 
 if executable('rls')
-      au User lsp_setup call lsp#register_server({
-              \ 'name': 'rls',
-              \ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-              "\ 'workspace_config': {'cfg_test': 'true'},
-              \ 'whitelist': ['rust'],
-              \ })
-  endif 
+	au User lsp_setup call lsp#register_server({
+				\ 'name': 'rls',
+				\ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+				\ 'whitelist': ['rust'],
+				\ })
+    au FileType rust setlocal omnifunc=lsp#complete
+endif 
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+" let g:asyncomplete_popup_delay = 200
+" let g:lsp_text_edit_enabled = 1
 
 
 " let g:LanguageClient_autoStart = 
 " for vim-racer
 " NeoBundle 'racer-rust/vim-racer'
-" set hidden
+set hidden
 " let g:racer_cmd = "/home/unsigned/.cargo/bin/racer"
 " let g:racer_experimental_completer = 1
 
@@ -301,3 +308,5 @@ let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
 
 syntax on
+syntax enable
+
