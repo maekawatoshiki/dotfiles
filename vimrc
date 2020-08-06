@@ -75,6 +75,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'lervag/vimtex'
 let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
 let g:vimtex_quickfix_open_on_warning = 0
+" let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
 augroup set_latex_compiler
 	autocmd!
 	autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
@@ -124,15 +125,16 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/lightline.vim'
 
-NeoBundle 'marcus/rsense'
+" NeoBundle 'marcus/rsense'
 
 " for Rust
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'rust-lang-nursery/rustfmt'
-NeoBundle 'prabirshrestha/async.vim'
-NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
-NeoBundle 'prabirshrestha/asyncomplete.vim'
-NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
+" NeoBundle 'prabirshrestha/async.vim'
+" NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
+" NeoBundle 'prabirshrestha/asyncomplete.vim'
+" NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
+NeoBundle 'neoclide/coc.nvim'
 
 if executable('rls')
 	au User lsp_setup call lsp#register_server({
@@ -146,7 +148,7 @@ endif
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:asyncomplete_auto_popup = 1
-let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_auto_completeopt = 1
 " let g:asyncomplete_popup_delay = 200
 " let g:lsp_text_edit_enabled = 1
 
