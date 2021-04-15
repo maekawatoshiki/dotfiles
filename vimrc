@@ -62,6 +62,15 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'myhere/vim-nodejs-complete'
+:setl omnifunc=jscomplete#CompleteJS
+if !exists('g:neocomplcache_omni_functions')
+  let g:neocomplcache_omni_functions = {}
+endif
+let g:neocomplcache_omni_functions.javascript = 'nodejscomplete#CompleteJS'
+let g:node_usejscomplete = 1
+
+
 " add plugins here
 " NeoBundle 'vim-jp/cpp-vim'
 " NeoBundle 'scrooloose/syntastic.git'
@@ -75,6 +84,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'lervag/vimtex'
 let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
 let g:vimtex_quickfix_open_on_warning = 0
+let g:tex_flavor = "latex"
 " let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
 augroup set_latex_compiler
 	autocmd!
@@ -83,14 +93,24 @@ augroup END
 
 filetype plugin indent on
 
+" Golang
+NeoBundle 'fatih/vim-go'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+" autocmd BufNewFile,BufRead *.go nmap <C-b> <plug>(vimtex-compile)
+
+NeoBundle 'rhysd/vim-llvm'
 NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'qnighy/satysfi.vim'
 NeoBundle 'luochen1990/rainbow'
 let g:rainbow_active = 1
 NeoBundle 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+			\ 'dir':  '\v[\/](\.(git|hg|svn)|build)$',
 			\ }
+"			\ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
+let g:ctrlp_max_files=0
 
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'scrooloose/nerdtree'
@@ -134,7 +154,8 @@ NeoBundle 'rust-lang-nursery/rustfmt'
 " NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
 " NeoBundle 'prabirshrestha/asyncomplete.vim'
 " NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
-NeoBundle 'neoclide/coc.nvim'
+NeoBundle 'neoclide/coc.nvim', 'v0.0.80'
+", '060b292e1c0d3b9233cb71fa662d0584309bdd20'
 
 if executable('rls')
 	au User lsp_setup call lsp#register_server({
@@ -294,17 +315,20 @@ function! s:get_syn_info()
 endfunction
 command! SyntaxInfo call s:get_syn_info()
 
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11'
+" let g:syntastic_cpp_compiler = 'clang++'
+" let g:syntastic_cpp_compiler_options = '-std=c++14 -Iinclude -I/home/unsigned/work/llvm-project'
+" let g:clang_cpp_options = '-std=c++14 -Iinclude -I/home/unsigned/work/llvm-project'
 let g:clang_periodic_quickfix = 0
 let g:clang_complete_copen = 1
 let g:clang_complete_auto = 1
 let g:clang_use_library = 1
+let g:clang_format_auto = 0
+let g:clang_format#enable_fallback_style = 0
 
-let g:clang_library_path = '/usr/lib/llvm-3.9/lib'
+" let g:clang_library_path = '/usr/lib/llvm-11/lib'
 " specify compiler options
-let g:clang_user_options = '-std=c++11 `llvm-config-3.9 --cppflags`'
-let g:clang_cpp_options = '-std=c++11 `llvm-config-3.9 --cppflags`'
+" let g:clang_user_options = '-std=c++14 `llvm-config-11 --cppflags`'
+let g:clang_cpp_options = '`/home/unsigned/work/llvm-project/build/bin/llvm-config --cxxflags`'
 let g:clang_auto = 0
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
