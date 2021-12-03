@@ -18,8 +18,8 @@ nnoremap ,t :tabnew<CR>
 nnoremap ,tq :tabclose<CR>
 nnoremap ,n gt
 nnoremap ,a ggVG
-nnoremap M gt
-nnoremap N gT
+" nnoremap M gt
+" nnoremap N gT
 imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-h> <Left>
@@ -28,7 +28,8 @@ set backspace=indent,eol,start
 set rnu
 " colorscheme
 set t_Co=256
-colorscheme rigel
+" colorscheme deep-space
+colorscheme deus
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -64,6 +65,19 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+" NeoBundle 'tyru/skk.vim'
+" let skk_large_jisyo = '~/work/playground/SKK-JISYO.L'
+
+" Colorscheme
+NeoBundle 'tyrannicaltoucan/vim-deep-space'
+NeoBundle 'cespare/vim-toml'
+NeoBundle 'ayu-theme/ayu-vim'
+" let ayucolor="mirage"
+" colorscheme ayu
+
+" GitHub Copilot
+NeoBundle 'github/copilot.vim'
+
 NeoBundle 'myhere/vim-nodejs-complete'
 :setl omnifunc=jscomplete#CompleteJS
 if !exists('g:neocomplcache_omni_functions')
@@ -78,15 +92,20 @@ let g:node_usejscomplete = 1
 " NeoBundle 'scrooloose/syntastic.git'
 " let g:syntastic_check_on_wq = 0
 
+" OpenCL
+NeoBundle 'petRUShka/vim-opencl'
+" NeoBundle 'brgmnn/vim-opencl'
+
 " NeoBundle 'tyru/eskk.vim'
 " let g:eskk#directory = "~/.eskk"
 " let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
 " let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp', }
 " let g:eskk#enable_completion = 1
 NeoBundle 'lervag/vimtex'
-let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
+let g:vimtex_compiler_latexmk = { 'continuous' : 0, 'build_dir' : 'aux' }
 let g:vimtex_quickfix_open_on_warning = 0
 let g:tex_flavor = "latex"
+let g:latex_latexmk_options = '-c'
 " let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
 augroup set_latex_compiler
 	autocmd!
@@ -173,10 +192,20 @@ NeoBundle 'rust-lang-nursery/rustfmt'
 " NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
 " NeoBundle 'prabirshrestha/asyncomplete.vim'
 " NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
-NeoBundle 'neoclide/coc.nvim', 'v0.0.80'
+NeoBundle 'neoclide/coc.nvim'
+", { 'rev': 'd3022067c1af0d50797f51425103d7f9ee22c236' }
+", 'v0.0.80'
+" let g:syntastic_error_symbol = 'EE'
+" let g:syntastic_style_error_symbol = 'E>'
+" let g:syntastic_warning_symbol = 'WW'
+" let g:syntastic_style_warning_symbol = 'W>'
+" 
+" let g:syntastic_auto_loc_list = 1
 ", '060b292e1c0d3b9233cb71fa662d0584309bdd20'
 " NeoBundle 'vim-syntastic/syntastic', {'autoload': {'filetypes': ['rust']}}
+" NeoBundle 'wagnerf42/vim-clippy'
 " let g:syntastic_rust_checkers = ['clippy']
+" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['rust'] }
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
@@ -233,7 +262,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'wombat',
+			\ 'colorscheme': 'deepspace',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
