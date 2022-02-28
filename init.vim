@@ -24,12 +24,13 @@ imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-h> <Left>
 imap <C-l> <Right>
+nnoremap <C-m> gt
+nnoremap <C-n> gT
 set backspace=indent,eol,start 
 set rnu
 " colorscheme
 set t_Co=256
 " colorscheme deep-space
-colorscheme deus
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -56,6 +57,8 @@ if has("autocmd")
 				\ if line("'\"") > 0 && line ("'\"") <= line("$") |
 				\   exe "normal! g'\"" |
 				\ endif
+  autocmd BufRead,BufNewFile *.cl setfiletype opencl
+  autocmd BufRead,BufNewFile *.ll setfiletype llvm
 endif
 
 " Setting NeoBundle
@@ -91,6 +94,12 @@ let g:node_usejscomplete = 1
 " NeoBundle 'vim-jp/cpp-vim'
 " NeoBundle 'scrooloose/syntastic.git'
 " let g:syntastic_check_on_wq = 0
+
+NeoBundle 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+NeoBundle 'folke/tokyonight.nvim'
+" let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
 
 " OpenCL
 NeoBundle 'petRUShka/vim-opencl'
@@ -262,7 +271,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'deepspace',
+			\ 'colorscheme': 'tokyonight',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -396,6 +405,29 @@ let g:clang_auto = 0
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
 
+lua <<EOF
+  require'nvim-treesitter.configs'.setup {
+    -- One of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
+    -- Install languages synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+    -- List of parsers to ignore installing
+    ignore_install = { "javascript" },
+    highlight = {
+      -- `false` will disable the whole extension
+      enable = true,
+      -- list of language that will be disabled
+      -- disable = { "c", "rust" },
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+  }
+EOF
+
 syntax on
 syntax enable
+colorscheme tokyonight
 
