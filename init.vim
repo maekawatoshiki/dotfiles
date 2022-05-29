@@ -24,7 +24,9 @@ imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-h> <Left>
 imap <C-l> <Right>
-nnoremap <C-m> gt
+nmap j gj
+nmap k gk
+nnoremap <C-k> gt
 nnoremap <C-n> gT
 set backspace=indent,eol,start 
 set rnu
@@ -58,6 +60,7 @@ if has("autocmd")
 				\   exe "normal! g'\"" |
 				\ endif
   autocmd BufRead,BufNewFile *.cl setfiletype opencl
+  autocmd BufRead,BufNewFile *.lalrpop setfiletype rust
   autocmd BufRead,BufNewFile *.ll setfiletype llvm
 endif
 
@@ -72,11 +75,13 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " let skk_large_jisyo = '~/work/playground/SKK-JISYO.L'
 
 " Colorscheme
-NeoBundle 'tyrannicaltoucan/vim-deep-space'
+" NeoBundle 'tyrannicaltoucan/vim-deep-space'
 NeoBundle 'cespare/vim-toml'
-NeoBundle 'ayu-theme/ayu-vim'
+" NeoBundle 'ayu-theme/ayu-vim'
 " let ayucolor="mirage"
-" colorscheme ayu
+colorscheme ayu
+NeoBundle 'rafamadriz/neon'
+NeoBundle 'mhartington/oceanic-next'
 
 " GitHub Copilot
 NeoBundle 'github/copilot.vim'
@@ -97,9 +102,9 @@ let g:node_usejscomplete = 1
 
 NeoBundle 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-NeoBundle 'folke/tokyonight.nvim'
+" NeoBundle 'folke/tokyonight.nvim'
 " let g:tokyonight_style = "night"
-let g:tokyonight_italic_functions = 1
+" let g:tokyonight_italic_functions = 1
 
 " OpenCL
 NeoBundle 'petRUShka/vim-opencl'
@@ -135,6 +140,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+NeoBundle 'antiagainst/vim-tablegen', { 'autoload' : {'filetypes' : 'tablegen'} }
+au BufRead,BufNewFile *.td set filetype=tablegen
 
 NeoBundle 'rhysd/vim-llvm'
 NeoBundle 'vim-scripts/gtags.vim'
@@ -271,7 +279,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'tokyonight',
+			\ 'colorscheme': 'oceanicnext',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -429,5 +437,4 @@ EOF
 
 syntax on
 syntax enable
-colorscheme tokyonight
-
+colorscheme OceanicNext
