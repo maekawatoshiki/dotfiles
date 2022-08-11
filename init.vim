@@ -30,9 +30,8 @@ nnoremap <C-k> gt
 nnoremap <C-n> gT
 set backspace=indent,eol,start 
 set rnu
-" colorscheme
+" For colorscheme
 set t_Co=256
-" colorscheme deep-space
 set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -71,20 +70,37 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 't9md/vim-quickhl'
+
+" Highlight the selected word
+nmap <Space>m <Plug>(quickhl-manual-this)
+" Highlight the selected text
+xmap <Space>m <Plug>(quickhl-manual-this)
+" Disable all highlights
+nmap <Space>M <Plug>(quickhl-manual-reset)
+
+
 " NeoBundle 'tyru/skk.vim'
 " let skk_large_jisyo = '~/work/playground/SKK-JISYO.L'
 
+" Toml
+NeoBundle 'cespare/vim-toml'
+
 " Colorscheme
 " NeoBundle 'tyrannicaltoucan/vim-deep-space'
-NeoBundle 'cespare/vim-toml'
 " NeoBundle 'ayu-theme/ayu-vim'
 " let ayucolor="mirage"
-colorscheme ayu
-NeoBundle 'rafamadriz/neon'
-NeoBundle 'mhartington/oceanic-next'
+" colorscheme ayu
+" NeoBundle 'rafamadriz/neon'
+" NeoBundle 'mhartington/oceanic-next'
+NeoBundle 'EdenEast/nightfox.nvim'
+
+" Indent guide
+NeoBundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup = 1
 
 " GitHub Copilot
-NeoBundle 'github/copilot.vim'
+" NeoBundle 'github/copilot.vim'
 
 NeoBundle 'myhere/vim-nodejs-complete'
 :setl omnifunc=jscomplete#CompleteJS
@@ -140,6 +156,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" PlantUML
+NeoBundle 'aklt/plantuml-syntax'
+au BufRead,BufNewFile *.puml set filetype=plantuml
 
 NeoBundle 'antiagainst/vim-tablegen', { 'autoload' : {'filetypes' : 'tablegen'} }
 au BufRead,BufNewFile *.td set filetype=tablegen
@@ -210,6 +230,14 @@ NeoBundle 'rust-lang-nursery/rustfmt'
 " NeoBundle 'prabirshrestha/asyncomplete.vim'
 " NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
 NeoBundle 'neoclide/coc.nvim'
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 ", { 'rev': 'd3022067c1af0d50797f51425103d7f9ee22c236' }
 ", 'v0.0.80'
 " let g:syntastic_error_symbol = 'EE'
@@ -279,7 +307,7 @@ nnoremap <silent><C-e> :NERDTreeToggle<CR>
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'oceanicnext',
+			\ 'colorscheme': 'nightfox',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -416,7 +444,7 @@ let g:clang_auto_select = 0
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
     -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = "maintained",
+    ensure_installed = "all",
     -- Install languages synchronously (only applied to `ensure_installed`)
     sync_install = false,
     -- List of parsers to ignore installing
@@ -437,4 +465,4 @@ EOF
 
 syntax on
 syntax enable
-colorscheme OceanicNext
+colorscheme nightfox
