@@ -32,6 +32,29 @@ tmpspace() {
   "$SHELL")
 }
 
+viewonnx() {
+  onnx=${1?Missing ONNX file path.}
+
+  if [ ! -f "${onnx}" ]; then
+    printf "File not foud: \e[1m${onnx}\x1B[0m\n"
+    return
+  fi
+
+  if [ ! -e $HOME/onnx2html.py ]; then
+    curl https://raw.githubusercontent.com/shinh/test/master/onnx2html.py > $HOME/onnx2html.py
+  fi
+
+  tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/onnx2html.XXXXXXXXXX")
+
+  python3 $HOME/onnx2html.py "${onnx}" "${tmpdir}/onnx.html"
+
+  if [ -x "$(command -v w3m)" ]; then
+    w3m "${tmpdir}/onnx.html"
+  fi
+
+  printf "Generated html at \e[4m\e[1m${tmpdir}/onnx.html\x1B[0m\n"
+}
+
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 
