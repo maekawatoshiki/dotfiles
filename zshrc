@@ -2,7 +2,7 @@ export ZSH="/home/uint/.oh-my-zsh"
 
 ZSH_THEME="mortalscumbag"
 
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 

@@ -93,7 +93,7 @@ NeoBundle 'cespare/vim-toml'
 " colorscheme ayu
 " NeoBundle 'rafamadriz/neon'
 " NeoBundle 'mhartington/oceanic-next'
-NeoBundle 'EdenEast/nightfox.nvim'
+" NeoBundle 'EdenEast/nightfox.nvim'
 
 " Indent guide
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -118,9 +118,9 @@ let g:node_usejscomplete = 1
 
 NeoBundle 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" NeoBundle 'folke/tokyonight.nvim'
-" let g:tokyonight_style = "night"
-" let g:tokyonight_italic_functions = 1
+NeoBundle 'folke/tokyonight.nvim'
+let g:tokyonight_style = "night"
+let g:tokyonight_italic_functions = 1
 
 " OpenCL
 NeoBundle 'petRUShka/vim-opencl'
@@ -188,7 +188,10 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_max_files=0
 
 NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'scrooloose/nerdtree'
+
+" NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'kyazdani42/nvim-tree.lua'
+
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'rhysd/wandbox-vim'
 NeoBundle 'thinca/vim-ref'
@@ -300,13 +303,10 @@ NeoBundleCheck
 let g:rsenseHome = '/usr/local/lib/rsense-0.3/bin'
 let g:rsenseUseOmniFunc = 1
 
-" NERDTree settings
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
-
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'nightfox',
+			\ 'colorscheme': 'tokyonight',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -462,6 +462,43 @@ lua <<EOF
   }
 EOF
 
+" nvim-tree.lua settings
+nnoremap <silent><C-e> :NvimTreeToggle<CR>
+lua <<EOF
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    -- adaptive_size = true,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+    icons = {
+      -- show = {
+      --   file = false,
+      --   folder = false,
+      --   folder_arrow = false,
+      --   git = false,
+      -- }
+    }
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
+EOF
+
 syntax on
 syntax enable
-colorscheme nightfox
+colorscheme tokyonight
