@@ -189,7 +189,11 @@ let g:ctrlp_max_files=0
 
 NeoBundle 'h1mesuke/vim-alignta'
 
+NeoBundle 'psf/black'
+au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR>:w<CR>
+
 " NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'kyazdani42/nvim-web-devicons'
 NeoBundle 'kyazdani42/nvim-tree.lua'
 
 NeoBundle 'tpope/vim-fugitive'
@@ -470,7 +474,7 @@ vim.g.loaded = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+-- require("nvim-tree").setup()
 
 require("nvim-tree").setup({
   sort_by = "case_sensitive",
