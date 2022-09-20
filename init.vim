@@ -209,10 +209,15 @@ NeoBundle 'octol/vim-cpp-enhanced-highlight'
 let g:cpp_class_scope_highlight = 1
 NeoBundle 'Shougo/neoinclude.vim'
 NeoBundle 'Shougo/vimproc'
-" NeoBundle 'tomtom/tcomment_vim'
-NeoBundle "tyru/caw.vim.git"
-nmap ,c <Plug>(caw:hatpos:toggle)
-vmap ,c <Plug>(caw:hatpos:toggle)
+
+" NeoBundle "tyru/caw.vim"
+" nmap ,c <Plug>(caw:hatpos:toggle)
+" vmap ,c <Plug>(caw:hatpos:toggle)
+" NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tomtom/tcomment_vim'
+nmap ,c :TComment<CR>
+vmap ,c :TComment<CR>
+
 NeoBundle 'vim-scripts/taglist.vim'
 let Tlist_Use_Right_Window = 1                    
 let Tlist_Exit_OnlyWindow = 1                
