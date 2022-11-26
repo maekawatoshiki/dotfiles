@@ -94,6 +94,13 @@ NeoBundle 'cespare/vim-toml'
 " NeoBundle 'rafamadriz/neon'
 " NeoBundle 'mhartington/oceanic-next'
 " NeoBundle 'EdenEast/nightfox.nvim'
+" NeoBundle 'folke/tokyonight.nvim'
+" let g:tokyonight_style = "night"
+" let g:tokyonight_italic_functions = 1
+" NeoBundle "EdenEast/nightfox.nvim"
+" NeoBundle "laniusone/kyotonight.vim"
+NeoBundle "sainnhe/everforest"
+let g:everforest_background = "hard"
 
 " Indent guide
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -117,10 +124,6 @@ let g:node_usejscomplete = 1
 " let g:syntastic_check_on_wq = 0
 
 NeoBundle 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-NeoBundle 'folke/tokyonight.nvim'
-let g:tokyonight_style = "night"
-let g:tokyonight_italic_functions = 1
 
 " OpenCL
 NeoBundle 'petRUShka/vim-opencl'
@@ -187,7 +190,8 @@ let g:ctrlp_custom_ignore = {
 "			\ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
 let g:ctrlp_max_files=0
 
-NeoBundle 'h1mesuke/vim-alignta'
+" NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'kg8m/vim-simple-align'
 
 NeoBundle 'psf/black'
 au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR>:w<CR>
@@ -233,6 +237,9 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'itchyny/lightline.vim'
 
 " NeoBundle 'marcus/rsense'
+
+" NeoBundle 'jamestthompson3/nvim-remote-containers'
+" NeoBundle 'https://codeberg.org/esensar/nvim-dev-container.git'
 
 " for Rust
 NeoBundle 'rust-lang/rust.vim'
@@ -315,7 +322,7 @@ let g:rsenseUseOmniFunc = 1
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'tokyonight',
+			\ 'colorscheme': 'everforest',
 			\ 'mode_map': {'c': 'NORMAL'},
 			\ 'active': {
 			\   'left': [
@@ -510,4 +517,4 @@ EOF
 
 syntax on
 syntax enable
-colorscheme tokyonight
+colorscheme everforest
