@@ -71,7 +71,13 @@ export PATH=${PATH}:/home/uint/go/bin/
 # TODO
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
+# eval "$(goenv init -)"
+goenv() {
+  # lazy load
+  unfunction "$0"
+  source <(goenv init -)
+  $0 "$@"
+}
 
 export PATH="$PATH:${HOME}/work/depot_tools"
 export PATH="$PATH:${HOME}/work/arcanist/bin/"
@@ -87,3 +93,14 @@ export PATH="/usr/local/cuda-11.4/bin/:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64/:$LD_LIBRARY_PATH"
 
 export GPG_TTY=$(tty)
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init -)"
+pyenv() {
+  # lazy load
+  unfunction "$0"
+  source <(pyenv init -)
+  $0 "$@"
+}
+
