@@ -104,8 +104,14 @@ RUN git clone https://github.com/neovim/neovim --depth 1 --recursive \
         make -j CMAKE_BUILD_TYPE=RelWithDebInfo \
     && sudo make install
 COPY init.vim /home/uint/.config/nvim/init.vim
+RUN sudo chown uint -R /home/uint/.config
 RUN mkdir -p ~/.vim/bundle \
     && git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
+# Setup node
+RUN curl -L git.io/nodebrew | perl - setup
+RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
+    && nodebrew install v16.15.0 \
+    && nodebrew use v16.15.0
 
 CMD ["/bin/zsh"]
