@@ -102,12 +102,17 @@ NeoBundle 'cespare/vim-toml'
 NeoBundle "sainnhe/everforest"
 let g:everforest_background = "hard"
 
+" NeoBundle 'https://github.com/widatama/vim-phoenix'
+" NeoBundle 'NLKNguyen/papercolor-theme'
+
+" NeoBundle 'arcticicestudio/nord-vim'
+
 " Indent guide
 NeoBundle 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_enable_on_vim_startup = 1
 
 " GitHub Copilot
-" NeoBundle 'github/copilot.vim'
+NeoBundle 'github/copilot.vim'
 
 NeoBundle 'myhere/vim-nodejs-complete'
 :setl omnifunc=jscomplete#CompleteJS
@@ -175,6 +180,7 @@ let g:rainbow_active = 1
 NeoBundle 'junegunn/fzf.vim'
 NeoBundle 'junegunn/fzf'
 nnoremap <C-p> :Files<CR>
+nnoremap ,<C-p> :Rg<CR>
 " NeoBundle 'ctrlpvim/ctrlp.vim'
 " NeoBundle 'mattn/ctrlp-matchfuzzy'
 " let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
@@ -240,6 +246,10 @@ NeoBundle 'itchyny/lightline.vim'
 
 " NeoBundle 'jamestthompson3/nvim-remote-containers'
 " NeoBundle 'https://codeberg.org/esensar/nvim-dev-container.git'
+
+" Gist
+NeoBundle 'mattn/vim-gist'
+NeoBundle 'mattn/webapi-vim'
 
 " for Rust
 NeoBundle 'rust-lang/rust.vim'
@@ -322,8 +332,10 @@ let g:rsenseUseOmniFunc = 1
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'everforest',
+			\ 'colorscheme': 'apprentice',
 			\ 'mode_map': {'c': 'NORMAL'},
+      \ 'separator': { 'left': "", 'right': "" },
+      \ 'subseparator': { 'left': "", 'right': "" },
 			\ 'active': {
 			\   'left': [
 			\							['mode', 'paste'], 
@@ -495,8 +507,10 @@ require("nvim-tree").setup({
     mappings = {
       list = {
         { key = "u", action = "dir_up" },
+        { key = "<C-e>", action = "close" },
       },
     },
+    side = "right"
   },
   renderer = {
     group_empty = true,
@@ -510,7 +524,7 @@ require("nvim-tree").setup({
     }
   },
   filters = {
-    dotfiles = true,
+    dotfiles = false,
   },
 })
 EOF
