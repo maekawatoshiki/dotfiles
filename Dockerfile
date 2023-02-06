@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
+
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -67,9 +69,11 @@ RUN set -x \
     && sudo apt-get clean \
     && sudo rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
+RUN mkdir /home/uint/work
+
 WORKDIR /home/uint/work
 
-RUN sudo chown uint -R /home/uint/work
+# RUN sudo chown uint -R /home/uint/
 
 # Setup lld
 
@@ -112,6 +116,9 @@ RUN mkdir -p ~/.vim/bundle \
 RUN curl -L git.io/nodebrew | perl - setup
 RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
     && nodebrew install v16.15.0 \
-    && nodebrew use v16.15.0
+    && nodebrew use v16.15.0 \
+    && npm install -g yarn
+
+# RUN sudo chown uint -R /home/uint/
 
 CMD ["/bin/zsh"]
