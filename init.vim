@@ -38,6 +38,7 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set background=dark
 set list
 set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+set pumblend=30
 
 " if (empty($TMUX))
 " 	if (has("nvim"))
@@ -332,7 +333,7 @@ let g:rsenseUseOmniFunc = 1
 " lightline settings
 set laststatus=2
 let g:lightline = {
-			\ 'colorscheme': 'apprentice',
+			\ 'colorscheme': 'everforest',
 			\ 'mode_map': {'c': 'NORMAL'},
       \ 'separator': { 'left': "", 'right': "" },
       \ 'subseparator': { 'left': "", 'right': "" },
@@ -396,8 +397,7 @@ endfunction
 
 command! Q call g:Exitvim()
 function! g:Exitvim()
-	:tabo
-	:q
+  :qa
 endfunction
 
 autocmd VimEnter * nested if @% == '' && s:GetBufByte() == 0 | source ~/.vimsession | endif
@@ -510,7 +510,7 @@ require("nvim-tree").setup({
         { key = "<C-e>", action = "close" },
       },
     },
-    side = "right"
+    side = "left"
   },
   renderer = {
     group_empty = true,
