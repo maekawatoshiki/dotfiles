@@ -40,17 +40,6 @@ set list
 set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 set pumblend=30
 
-" if (empty($TMUX))
-" 	if (has("nvim"))
-" 		"For Neovim 0.1.3 and 0.1.4 <
-" 		"https://github.com/neovim/neovim/pull/2198 >
-" 		let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-" 	endif
-" 	if (has("termguicolors"))
-" 		set termguicolors
-" 	endif
-" endif
-" line highlight
 set cursorline
 hi CursorLineNr cterm=NONE ctermfg=232
 
@@ -71,7 +60,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 't9md/vim-quickhl'
+NeoBundleLazy 't9md/vim-quickhl'
 
 " Highlight the selected word
 nmap <Space>m <Plug>(quickhl-manual-this)
@@ -132,7 +121,7 @@ let g:node_usejscomplete = 1
 NeoBundle 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " OpenCL
-NeoBundle 'petRUShka/vim-opencl'
+NeoBundleLazy 'petRUShka/vim-opencl'
 " NeoBundle 'brgmnn/vim-opencl'
 
 " NeoBundle 'tyru/eskk.vim'
@@ -140,7 +129,7 @@ NeoBundle 'petRUShka/vim-opencl'
 " let g:eskk#dictionary = { 'path': "~/.skk-jisyo", 'sorted': 0, 'encoding': 'utf-8', }
 " let g:eskk#large_dictionary = { 'path': "~/.eskk/SKK-JISYO.L", 'sorted': 1, 'encoding': 'euc-jp', }
 " let g:eskk#enable_completion = 1
-NeoBundle 'lervag/vimtex'
+NeoBundleLazy 'lervag/vimtex'
 let g:vimtex_compiler_latexmk = { 'continuous' : 0, 'build_dir' : 'aux' }
 let g:vimtex_quickfix_open_on_warning = 0
 let g:tex_flavor = "latex"
@@ -154,17 +143,11 @@ augroup END
 filetype plugin indent on
 
 " Golang
-NeoBundle 'fatih/vim-go'
+NeoBundleLazy 'fatih/vim-go'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 " autocmd BufNewFile,BufRead *.go nmap <C-b> <plug>(vimtex-compile)
-
-" Rust
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 " PlantUML
 NeoBundle 'aklt/plantuml-syntax'
@@ -189,12 +172,6 @@ let g:ctrlp_custom_ignore = {
 	\   'dir' : '\.git$\|build.*$\|node_modules\|dist\|target' ,
 	\ 	'file' : '\v\.(exe|dll|lib)$'
 	\ }
-" let g:ctrlp_custom_ignore = '\v[\/]\.(DS_Store\|git\|hg\|svn\|optimized\|compiled\|node_modules\|build\|build_llvm_clang_full)$'
-" let g:ctrlp_custom_ignore = 'git\|build\|build_llvm_clang_full'
-" let g:ctrlp_custom_ignore = {
-"			\ 'dir':  '\v[\/]((\.(git|hg|svn))|build*)$',
-"			\ }
-"			\ 'dir':  '\v[\/](target|\.(git|hg|svn))$',
 let g:ctrlp_max_files=0
 
 " NeoBundle 'h1mesuke/vim-alignta'
@@ -208,33 +185,23 @@ NeoBundle 'kyazdani42/nvim-web-devicons'
 NeoBundle 'kyazdani42/nvim-tree.lua'
 
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'rhysd/wandbox-vim'
-NeoBundle 'thinca/vim-ref'
-" NeoBundle 'justmao945/vim-clang'
-NeoBundle 'mattn/vim-vimstreamer'
-NeoBundle 'rhysd/github-complete.vim'
-NeoBundleLazy 'vim-jp/cpp-vim', {
-			\ 'autoload' : {'filetypes' : 'cpp'}
-			\ }
-NeoBundle 'octol/vim-cpp-enhanced-highlight'
-let g:cpp_class_scope_highlight = 1
-NeoBundle 'Shougo/neoinclude.vim'
-NeoBundle 'Shougo/vimproc'
+" NeoBundle 'rhysd/wandbox-vim'
+NeoBundleLazy 'thinca/vim-ref'
+NeoBundleLazy 'mattn/vim-vimstreamer'
+NeoBundleLazy 'rhysd/github-complete.vim'
+NeoBundleLazy 'Shougo/neoinclude.vim'
+NeoBundleLazy 'Shougo/vimproc'
 
 " NeoBundle "tyru/caw.vim"
 " nmap ,c <Plug>(caw:hatpos:toggle)
 " vmap ,c <Plug>(caw:hatpos:toggle)
 " NeoBundle 'tpope/vim-commentary'
-NeoBundle 'tomtom/tcomment_vim'
+NeoBundleLazy 'tomtom/tcomment_vim'
 nmap ,c :TComment<CR>
 vmap ,c :TComment<CR>
 
-NeoBundle 'vim-scripts/taglist.vim'
-let Tlist_Use_Right_Window = 1                    
-let Tlist_Exit_OnlyWindow = 1                
-nnoremap tt :TlistToggle<CR>   
-NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
+
 au BufRead,BufNewFile *.md set filetype=markdown
 
 NeoBundle 'kana/vim-submode'
@@ -255,10 +222,8 @@ NeoBundle 'mattn/webapi-vim'
 " for Rust
 NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'rust-lang-nursery/rustfmt'
-" NeoBundle 'prabirshrestha/async.vim'
-" NeoBundle 'prabirshrestha/vim-lsp' , {'rev': "83a3a2b004316dcc89ce33b695c4cda8a54f0d79"}
-" NeoBundle 'prabirshrestha/asyncomplete.vim'
-" NeoBundle 'prabirshrestha/asyncomplete-lsp.vim'
+"
+" coc.nvim
 NeoBundle 'neoclide/coc.nvim'
 " inoremap <silent><expr> <TAB>
 "      \ coc#pum#visible() ? coc#pum#next(1):
@@ -266,57 +231,17 @@ NeoBundle 'neoclide/coc.nvim'
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-", { 'rev': 'd3022067c1af0d50797f51425103d7f9ee22c236' }
-", 'v0.0.80'
-" let g:syntastic_error_symbol = 'EE'
-" let g:syntastic_style_error_symbol = 'E>'
-" let g:syntastic_warning_symbol = 'WW'
-" let g:syntastic_style_warning_symbol = 'W>'
-" 
-" let g:syntastic_auto_loc_list = 1
-", '060b292e1c0d3b9233cb71fa662d0584309bdd20'
-" NeoBundle 'vim-syntastic/syntastic', {'autoload': {'filetypes': ['rust']}}
-" NeoBundle 'wagnerf42/vim-clippy'
-" let g:syntastic_rust_checkers = ['clippy']
-" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['rust'] }
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 1
-" " let s:hooks = neobundle#get_hooks("syntastic")
-" " function! s:hooks.on_source(bundle)
-" "   " save時にシンタックスチェックする
-" "   let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['rust'] }
-" "   let g:syntastic_rust_checkers = ['rustc', 'cargo']
-" " endfunction
-
-if executable('rls')
-	au User lsp_setup call lsp#register_server({
-				\ 'name': 'rls',
-				\ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
-				\ 'whitelist': ['rust'],
-				\ })
-    au FileType rust setlocal omnifunc=lsp#complete
-endif 
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 let g:lsp_diagnostics_enabled = 1
 let g:lsp_diagnostics_echo_cursor = 1
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_auto_completeopt = 1
-" let g:asyncomplete_popup_delay = 200
-" let g:lsp_text_edit_enabled = 1
 
-
-" let g:LanguageClient_autoStart = 
-" for vim-racer
-" NeoBundle 'racer-rust/vim-racer'
 set hidden
-" let g:racer_cmd = "/home/unsigned/.cargo/bin/racer"
-" let g:racer_experimental_completer = 1
 
 " for rustfmt
 let g:rustfmt_autosave = 1
@@ -411,7 +336,6 @@ function! s:GetBufByte()
 	endif
 endfunction
 
-
 function! s:get_syn_id(transparent)
 	let synid = synID(line("."), col("."), 1)
 	if a:transparent
@@ -449,24 +373,6 @@ function! s:get_syn_info()
 				\ " guibg: " . linkedSyn.guibg
 endfunction
 command! SyntaxInfo call s:get_syn_info()
-
-" let g:syntastic_cpp_compiler = 'clang++'
-" let g:syntastic_cpp_compiler_options = '-std=c++14 -Iinclude -I/home/unsigned/work/llvm-project'
-" let g:clang_cpp_options = '-std=c++14 -Iinclude -I/home/unsigned/work/llvm-project'
-let g:clang_periodic_quickfix = 0
-let g:clang_complete_copen = 1
-let g:clang_complete_auto = 1
-let g:clang_use_library = 1
-let g:clang_format_auto = 0
-let g:clang_format#enable_fallback_style = 0
-
-" let g:clang_library_path = '/usr/lib/llvm-11/lib'
-" specify compiler options
-" let g:clang_user_options = '-std=c++14 `llvm-config-11 --cppflags`'
-let g:clang_cpp_options = '`/home/unsigned/work/llvm-project/build/bin/llvm-config --cxxflags`'
-let g:clang_auto = 0
-let g:clang_complete_auto = 0
-let g:clang_auto_select = 0
 
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
