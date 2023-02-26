@@ -17,38 +17,174 @@ env:
   TERM: xterm-256color
 
 window:
-  opacity: 0.90
+  opacity: 0.9
   decorations: "none"
 
 scrolling:
   multiplier: 1
 
 # Nightfox
-colors:
-  # Default colors
-  primary:
-    background: '0x192330'
-    foreground: '0xcdcecf'
-  # Normal colors
-  normal:
-    black:   '0x393b44'
-    red:     '0xc94f6d'
-    green:   '0x81b29a'
-    yellow:  '0xdbc074'
-    blue:    '0x719cd6'
-    magenta: '0x9d79d6'
-    cyan:    '0x63cdcf'
-    white:   '0xdfdfe0'
-  # Bright colors
-  bright:
-    black:   '0x575860'
-    red:     '0xd16983'
-    green:   '0x8ebaa4'
-    yellow:  '0xe0c989'
-    blue:    '0x86abdc'
-    magenta: '0xbaa1e2'
-    cyan:    '0x7ad4d6'
-    white:   '0xe4e4e5'
-  indexed_colors:
-    - { index: 16, color: '0xf4a261' }
-    - { index: 17, color: '0xd67ad2' }
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x192330'
+#     foreground: '0xcdcecf'
+#   # Normal colors
+#   normal:
+#     black:   '0x393b44'
+#     red:     '0xc94f6d'
+#     green:   '0x81b29a'
+#     yellow:  '0xdbc074'
+#     blue:    '0x719cd6'
+#     magenta: '0x9d79d6'
+#     cyan:    '0x63cdcf'
+#     white:   '0xdfdfe0'
+#   # Bright colors
+#   bright:
+#     black:   '0x575860'
+#     red:     '0xd16983'
+#     green:   '0x8ebaa4'
+#     yellow:  '0xe0c989'
+#     blue:    '0x86abdc'
+#     magenta: '0xbaa1e2'
+#     cyan:    '0x7ad4d6'
+#     white:   '0xe4e4e5'
+#   indexed_colors:
+#     - { index: 16, color: '0xf4a261' }
+#     - { index: 17, color: '0xd67ad2' }
+
+schemes:
+  everforest_dark_hard: &everforest_dark_hard
+    primary:
+      background: '#1b2329'
+      foreground: '#d3c6aa'
+    normal:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+    bright:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+  everforest_dark_medium: &everforest_dark_medium
+    primary:
+      background: '#2f383e'
+      foreground: '#d3c6aa'
+    normal:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+    bright:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+  everforest_dark_soft: &everforest_dark_soft
+    primary:
+      background: '#323d43'
+      foreground: '#d3c6aa'
+    normal:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+    bright:
+      black:   '#4b565c'
+      red:     '#e67e80'
+      green:   '#a7c080'
+      yellow:  '#dbbc7f'
+      blue:    '#7fbbb3'
+      magenta: '#d699b6'
+      cyan:    '#83c092'
+      white:   '#d3c6aa'
+  everforest_light_hard: &everforest_light_hard
+    primary:
+      background: '#fff9e8'
+      foreground: '#5c6a72'
+    normal:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+    bright:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+  everforest_light_medium: &everforest_light_medium
+    primary:
+      background: '#fdf6e3'
+      foreground: '#5c6a72'
+    normal:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+    bright:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+  everforest_light_soft: &everforest_light_soft
+    primary:
+      background: '#f8f0dc'
+      foreground: '#5c6a72'
+    normal:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+    bright:
+      black:   '#5c6a72'
+      red:     '#f85552'
+      green:   '#8da101'
+      yellow:  '#dfa000'
+      blue:    '#3a94c5'
+      magenta: '#df69ba'
+      cyan:    '#35a77c'
+      white:   '#dfddc8'
+
+colors: *everforest_dark_hard
