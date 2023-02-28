@@ -100,6 +100,13 @@ COPY zshrc /home/uint/.zshrc
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
+# Setup node
+RUN curl -L git.io/nodebrew | perl - setup
+RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
+    && nodebrew install v16.15.0 \
+    && nodebrew use v16.15.0 \
+    && npm install -g yarn
+
 # Build neovim
 
 RUN git clone https://github.com/neovim/neovim --depth 1 --recursive \
@@ -107,17 +114,13 @@ RUN git clone https://github.com/neovim/neovim --depth 1 --recursive \
     && CC=/usr/lib/ccache/clang CXX=/usr/lib/ccache/clang++ \
         make -j CMAKE_BUILD_TYPE=RelWithDebInfo \
     && sudo make install
-COPY init.vim /home/uint/.config/nvim/init.vim
+COPY init.vim /home/uint/work/dotfiles/init.vim
+COPY plugins.lua /home/uint/work/dotfiles/plugins.lua
+COPY setup-nvim.sh /home/uint/work/dotfiles/setup-nvim.sh
+RUN mkdir /home/uint/.config
 RUN sudo chown uint -R /home/uint/.config
-RUN mkdir -p ~/.vim/bundle \
-    && git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
-# Setup node
-RUN curl -L git.io/nodebrew | perl - setup
-RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
-    && nodebrew install v16.15.0 \
-    && nodebrew use v16.15.0 \
-    && npm install -g yarn
+# RUN mkdir -p ~/.vim/bundle \
+#     && git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 # RUN sudo chown uint -R /home/uint/
 
