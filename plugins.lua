@@ -112,8 +112,9 @@ return require('packer').startup(function(use)
   }
 
   -- nvim-tree
-  use { 'kyazdani42/nvim-tree.lua', config =
-    function()
+  use {
+    'kyazdani42/nvim-tree.lua',
+    config = function()
       -- disable netrw at the very start of your init.lua (strongly advised)
       vim.g.loaded = 1
       vim.g.loaded_netrwPlugin = 1
@@ -209,8 +210,8 @@ return require('packer').startup(function(use)
   use 'qnighy/satysfi.vim'
 
   -- Rainbow parentheses
-  use { 'luochen1990/rainbow', config =
-    function()
+  use { 'luochen1990/rainbow',
+    config = function()
       vim.cmd [[ let g:rainbow_active = 1 ]]
     end
   }
@@ -219,8 +220,8 @@ return require('packer').startup(function(use)
   use 'kg8m/vim-simple-align'
 
   -- python black
-  use { 'psf/black', config =
-    function()
+  use { 'psf/black',
+    config = function()
       vim.cmd [[ au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR>:w<CR> ]]
     end
   }
