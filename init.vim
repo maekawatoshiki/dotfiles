@@ -53,6 +53,7 @@ autocmd BufRead,BufNewFile *.lalrpop setfiletype rust
 autocmd BufRead,BufNewFile *.ll setfiletype llvm
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
+autocmd BufNewFile,BufRead *.zsh-theme setfiletype bash
 
 " Force quit by :Q
 command! Q call g:Exitvim()
