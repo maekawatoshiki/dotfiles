@@ -88,14 +88,6 @@ RUN sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
     && sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
 RUN sudo update-alternatives --auto "ld"
 
-# Setup zsh
-
-RUN sh -c \
-      "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-RUN git clone https://github.com/zsh-users/zsh-autosuggestions \
-      ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-COPY zshrc /home/uint/.zshrc
-
 # Install Rust
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -122,6 +114,16 @@ RUN sudo chown uint -R /home/uint/.config
 # RUN mkdir -p ~/.vim/bundle \
 #     && git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
-# RUN sudo chown uint -R /home/uint/
+# Install poetry
+
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
+# Setup zsh
+
+RUN sh -c \
+      "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions \
+      ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+COPY zshrc /home/uint/.zshrc
 
 CMD ["/bin/zsh"]
