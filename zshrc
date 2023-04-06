@@ -58,10 +58,6 @@ viewonnx() {
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 
-# TODO 
-export PATH="$HOME/.poetry/bin:$PATH"
-source $HOME/.poetry/env
-
 # TODO
 # . /home/uint/torch/install/bin/torch-activate
 
