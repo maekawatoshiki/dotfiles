@@ -88,6 +88,10 @@ RUN sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
     && sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.bfd" 10
 RUN sudo update-alternatives --auto "ld"
 
+# Install poetry
+
+RUN curl -sSL https://install.python-poetry.org | python3 -
+
 # Install Rust
 
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -111,12 +115,9 @@ COPY plugins.lua /home/uint/work/dotfiles/plugins.lua
 COPY setup-nvim.sh /home/uint/work/dotfiles/setup-nvim.sh
 RUN mkdir /home/uint/.config
 RUN sudo chown uint -R /home/uint/.config
-# RUN mkdir -p ~/.vim/bundle \
-#     && git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
-
-# Install poetry
-
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN mkdir -p $HOME/.config/nvim/lua
+RUN ln -s $HOME/work/dotfiles/plugins.lua $HOME/.config/nvim/lua/plugins.lua
+RUN ln -s $HOME/work/dotfiles/init.vim $HOME/.config/nvim/init.vim
 
 # Setup zsh
 
