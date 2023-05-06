@@ -1,3 +1,6 @@
+let g:loaded_python3_provider = 1
+let g:loaded_pythonx_provider = 1
+
 set autoindent
 set smartindent
 set tabstop=2
