@@ -11,5 +11,6 @@ ln -sf ~/.dotfiles/vim ~/.vim
 ln -sf ~/.dotfiles/tmux.conf ~/.tmux.conf
 
 # zsh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ln -sf ~/.dotfiles/zshrc ~/.zshrc
