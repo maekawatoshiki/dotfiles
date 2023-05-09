@@ -1,5 +1,7 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
+vim.loader.enable()
+
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
@@ -121,6 +123,7 @@ return require('packer').startup(function(use)
       require("nvim-tree").setup({
         sort_by = "case_sensitive",
         view = {
+          -- adaptive_size = true,
           side = "left"
         },
         renderer = {
@@ -287,7 +290,7 @@ return require('packer').startup(function(use)
   -- python black
   use { 'psf/black',
     config = function()
-      vim.cmd [[ au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR>:w<CR> ]]
+      vim.cmd [[ au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR> ]]
     end
   }
 
@@ -303,7 +306,11 @@ return require('packer').startup(function(use)
 
   -- Rust
   use 'rust-lang/rust.vim'
-  use 'rust-lang-nursery/rustfmt'
+  use { 'rust-lang-nursery/rustfmt',
+    config = function()
+      vim.cmd [[ au BufRead,BufNewFile *.rs nnoremap <C-b> :RustFmt<CR> ]]
+    end
+  }
 
   -- coc.nvim
   use {
