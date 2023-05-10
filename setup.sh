@@ -78,6 +78,7 @@ ln -s $(pwd)/init.vim $HOME/.config/nvim/init.vim
 ## https://github.com/nodenv/nodenv#basic-github-checkout
 if [ ! -d ~/.nodenv ]; then
   git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+  export PATH="$HOME/.nodenv/bin:$PATH"
   eval "$(nodenv init - zsh)"
 fi
 
@@ -87,3 +88,9 @@ git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node
 ## Install yarn
 git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
 
+nodenv install 19.7.0
+nodenv global 19.7.0
+
+# Install rustup
+
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
