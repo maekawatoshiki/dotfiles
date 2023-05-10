@@ -315,6 +315,7 @@ return require('packer').startup(function(use)
   -- coc.nvim
   use {
     'neoclide/coc.nvim',
+    run = 'zsh -c "yarn install"',
     config = function()
       vim.cmd [[
         " inoremap <silent><expr> <TAB>
