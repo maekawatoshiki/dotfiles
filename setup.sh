@@ -75,21 +75,21 @@ ln -s $(pwd)/init.vim $HOME/.config/nvim/init.vim
 
 # Install nodenv
 
-## https://github.com/nodenv/nodenv#basic-github-checkout
 if [ ! -d ~/.nodenv ]; then
+  ## https://github.com/nodenv/nodenv#basic-github-checkout
   git clone https://github.com/nodenv/nodenv.git ~/.nodenv
   export PATH="$HOME/.nodenv/bin:$PATH"
   eval "$(nodenv init - zsh)"
+
+  ## For some reason, we need this.
+  git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build
+
+  ## Install yarn
+  git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
+
+  nodenv install 18.16.0
+  nodenv global 18.16.0
 fi
-
-## For some reason, we need this.
-git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build
-
-## Install yarn
-git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
-
-nodenv install 19.7.0
-nodenv global 19.7.0
 
 # Install rustup
 
