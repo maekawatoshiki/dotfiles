@@ -67,7 +67,7 @@ viewonnx() {
   printf "Generated html at \e[4m\e[1m${tmpdir}/onnx.html\x1B[0m\n"
 }
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+# export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 
 # TODO
@@ -96,7 +96,7 @@ export PATH="$PATH:${HOME}/work/arcanist/bin/"
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+# export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH="/usr/local/cuda-11.4/bin/:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64/:$LD_LIBRARY_PATH"
 
@@ -112,3 +112,6 @@ pyenv() {
   $0 "$@"
 }
 
+# nodenv
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init - zsh)"
