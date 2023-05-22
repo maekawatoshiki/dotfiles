@@ -68,7 +68,7 @@ git clone https://github.com/neovim/neovim --depth 1 --recursive \
     && sudo make -j CMAKE_BUILD_TYPE=Release install
 popd
 
-mkdir /home/uint/.config
+mkdir $HOME/.config
 mkdir -p $HOME/.config/nvim/lua
 ln -s $(pwd)/plugins.lua $HOME/.config/nvim/lua/plugins.lua
 ln -s $(pwd)/init.vim $HOME/.config/nvim/init.vim
@@ -94,3 +94,7 @@ fi
 # Install rustup
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# Finish!
+
+printf "\e[32mSetup complete!\e[m\n"
