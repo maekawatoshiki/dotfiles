@@ -46,6 +46,7 @@ vim.cmd [[
   set pumblend=30
   set cursorline
   hi CursorLineNr cterm=NONE ctermfg=232
+  set clipboard+=unnamedplus
 
   lua require('plugins')
 
