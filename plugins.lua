@@ -328,6 +328,7 @@ return require('packer').startup(function(use)
         nmap <silent> gy <Plug>(coc-type-definition)
         nmap <silent> gi <Plug>(coc-implementation)
         nmap <silent> gr <Plug>(coc-references)
+        command! CC :CocCommand
       ]]
     end
   }
