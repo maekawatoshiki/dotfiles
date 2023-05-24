@@ -95,6 +95,10 @@ fi
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+# tmux
+
+ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
+
 # Finish!
 
 printf "\e[32mSetup complete!\e[m\n"
