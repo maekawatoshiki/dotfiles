@@ -5,7 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-export ZSH="/home/uint/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="mortalscumbag"
@@ -36,7 +36,7 @@ alias bigfiles='du -a ./ | sort -n -r | head -n100 | less'
 
 export PATH=${PATH}:/opt/riscv/bin
 export PATH=${PATH}:/usr/local
-export PATH=${PATH}:/home/uint/.local/bin
+export PATH=${PATH}:$HOME/.local/bin
 
 tmpspace() {
   (
@@ -71,10 +71,10 @@ viewonnx() {
 export PATH=$PATH:/usr/local/go/bin
 
 # TODO
-# . /home/uint/torch/install/bin/torch-activate
+# . $HOME/torch/install/bin/torch-activate
 
-export PATH=${PATH}:/home/uint/work/zig/build/bin/
-export PATH=${PATH}:/home/uint/go/bin/
+export PATH=${PATH}:$HOME/work/zig/build/bin/
+export PATH=${PATH}:$HOME/go/bin/
 
 # TODO
 export GOENV_ROOT="$HOME/.goenv"
