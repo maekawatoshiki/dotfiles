@@ -68,7 +68,7 @@ git clone https://github.com/neovim/neovim --depth 1 --recursive \
     && sudo make -j CMAKE_BUILD_TYPE=Release install
 popd
 
-mkdir $HOME/.config
+mkdir -p $HOME/.config
 mkdir -p $HOME/.config/nvim/lua
 ln -s $(pwd)/plugins.lua $HOME/.config/nvim/lua/plugins.lua
 ln -s $(pwd)/init.lua $HOME/.config/nvim/init.lua
