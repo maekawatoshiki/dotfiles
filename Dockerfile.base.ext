@@ -35,4 +35,6 @@ WORKDIR /home/uint/dotfiles
 
 RUN ./setup.sh
 
+RUN chsh -s /bin/zsh
+
 CMD ["/bin/zsh"]
