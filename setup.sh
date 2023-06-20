@@ -40,7 +40,9 @@ sudo apt-get install -y --no-install-recommends \
     python3-pip \
     python3-venv \
     wget \
-    tmux
+    tmux \
+    git-lfs \
+    htop
 
 # lld
 sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
