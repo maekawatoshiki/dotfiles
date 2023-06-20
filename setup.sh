@@ -39,7 +39,8 @@ sudo apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
     python3-venv \
-    wget
+    wget \
+    tmux
 
 # lld
 sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \

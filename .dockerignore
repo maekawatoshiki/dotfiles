@@ -5,3 +5,4 @@
 !*.sh
 !p10k.zsh
 !init.lua
+!tmux.conf
