@@ -21,7 +21,7 @@ RUN set -x \
         --gid 1000 \
         --home-dir /home/uint \
         --create-home \
-        --shell /bin/bash \
+        --shell /bin/zsh \
         uint \
     && chown uint -R /home/uint
 
@@ -34,7 +34,5 @@ COPY --chown=uint:uint . dotfiles
 WORKDIR /home/uint/dotfiles
 
 RUN ./setup.sh
-
-RUN sudo chsh -s /bin/zsh
 
 CMD ["/bin/zsh"]
