@@ -3,3 +3,5 @@
 !init.vim
 !plugins.lua
 !*.sh
+!p10k.zsh
+!init.lua
