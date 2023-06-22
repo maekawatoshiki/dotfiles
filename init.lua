@@ -50,7 +50,6 @@ vim.cmd [[
 
   lua require('plugins')
 
-
   autocmd BufReadPost *
         \ if line("'\"") > 0 && line ("'\"") <= line("$") |
         \   exe "normal! g'\"" |
@@ -108,3 +107,4 @@ vim.cmd [[
   syntax enable
   colorscheme everforest
 ]]
+

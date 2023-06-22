@@ -90,6 +90,8 @@ return require('packer').startup(function(use)
   -- nvim-treesitter
   use { 'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
+    opt = true,
+    event = "BufRead",
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -244,7 +246,7 @@ return require('packer').startup(function(use)
   vim.cmd [[ let g:indent_guides_enable_on_vim_startup = 1 ]]
 
   -- GitHub Copilot
-  use 'github/copilot.vim'
+  use { 'github/copilot.vim', opt = true, event = "VimEnter" }
 
   -- OpenCL
   use 'petRUShka/vim-opencl'
@@ -330,6 +332,15 @@ return require('packer').startup(function(use)
         nmap <silent> gr <Plug>(coc-references)
         command! CC :CocCommand
       ]]
+    end
+  }
+
+  use {
+    'folke/flash.nvim',
+    opt = true,
+    event = "BufRead",
+    config = function()
+      require('flash').setup()
     end
   }
 
