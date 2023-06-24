@@ -42,7 +42,8 @@ sudo apt-get install -y --no-install-recommends \
     wget \
     tmux \
     git-lfs \
-    htop
+    htop \
+    zlib1g-dev
 
 # lld
 sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
