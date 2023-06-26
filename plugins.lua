@@ -91,7 +91,7 @@ return require('packer').startup(function(use)
   use { 'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     opt = true,
-    event = "BufRead",
+    event = "VimEnter",
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -292,7 +292,7 @@ return require('packer').startup(function(use)
   -- python black
   use { 'psf/black',
     config = function()
-      vim.cmd [[ au BufRead,BufNewFile *.py nnoremap <C-b> :Black<CR> ]]
+      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR> ]]
     end
   }
 
@@ -308,9 +308,10 @@ return require('packer').startup(function(use)
 
   -- Rust
   use 'rust-lang/rust.vim'
-  use { 'rust-lang-nursery/rustfmt',
+  use { 
+    'rust-lang-nursery/rustfmt',
     config = function()
-      vim.cmd [[ au BufRead,BufNewFile *.rs nnoremap <C-b> :RustFmt<CR> ]]
+      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR> ]]
     end
   }
 
@@ -338,7 +339,7 @@ return require('packer').startup(function(use)
   use {
     'folke/flash.nvim',
     opt = true,
-    event = "BufRead",
+    event = "VimEnter",
     config = function()
       require('flash').setup()
     end
