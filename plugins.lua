@@ -336,14 +336,14 @@ return require('packer').startup(function(use)
     end
   }
 
-  use {
-    'folke/flash.nvim',
-    opt = true,
-    event = "VimEnter",
-    config = function()
-      require('flash').setup()
-    end
-  }
+  -- use {
+  --   'folke/flash.nvim',
+  --   opt = true,
+  --   event = "BufRead",
+  --   config = function()
+  --     require('flash').setup()
+  --   end
+  -- }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
