@@ -336,14 +336,16 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- use {
-  --   'folke/flash.nvim',
-  --   opt = true,
-  --   event = "BufRead",
-  --   config = function()
-  --     require('flash').setup()
-  --   end
-  -- }
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2',
+    config = function()
+      require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+      vim.cmd [[ 
+        nnoremap <silent> H :lua require'hop'.hint_patterns({}, vim.fn['getreg']('/'))<CR>
+      ]]
+    end
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
