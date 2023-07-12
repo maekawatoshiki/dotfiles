@@ -60,6 +60,9 @@ git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$
 cp ./zshrc ~/.zshrc
 cp ./p10k.zsh ~/.p10k.zsh
 
+# git
+ln -s $PWD/gitconfig $HOME/.gitconfig
+
 # Build neovim
 
 mkdir -p ~/work

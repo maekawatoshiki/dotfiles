@@ -1,0 +1,29 @@
+[core]
+	editor = nvim
+	quotepath = false
+  pager = delta
+[user]
+	email = maekawatoshiki1017@gmail.com
+  name = maekawatoshiki
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+  required = true
+[alias]
+  sh = stash
+  st = status
+  com = commit
+  ch = checkout
+[interactive]
+  diffFilter = delta --color-only
+[credential]
+	helper = store
+[github]
+	user = maekawatoshiki
+[delta]
+  syntax-theme = 1337
+[merge]
+  conflictstyle=diff3
