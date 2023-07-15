@@ -67,13 +67,14 @@ ln -s $PWD/gitconfig $HOME/.gitconfig
 
 mkdir -p ~/work
 
-pushd ~/work
-git clone https://github.com/neovim/neovim --depth 1 --recursive \
-    && cd neovim \
-    && CC=/usr/lib/ccache/clang CXX=/usr/lib/ccache/clang++ \
-        make -j CMAKE_BUILD_TYPE=Release \
-    && sudo make -j CMAKE_BUILD_TYPE=Release install
-popd
+(
+  cd ~/work
+  git clone https://github.com/neovim/neovim --depth 1 --recursive \
+      && cd neovim \
+      && CC=/usr/lib/ccache/clang CXX=/usr/lib/ccache/clang++ \
+          make -j CMAKE_BUILD_TYPE=Release \
+      && sudo make -j CMAKE_BUILD_TYPE=Release install
+)
 
 mkdir -p $HOME/.config
 mkdir -p $HOME/.config/nvim/lua
