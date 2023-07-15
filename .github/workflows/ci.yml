@@ -11,13 +11,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  CI:
-
+  Base:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up
       run: |
         docker build -t uint:base -f Dockerfile.base .
         docker run -v "$(pwd):/home/uint/dotfiles" -w "/home/uint/dotfiles" --rm uint:base bash ./setup.sh
+  Script:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up with script
+      run: |
+        ./docker-base-ext.sh
