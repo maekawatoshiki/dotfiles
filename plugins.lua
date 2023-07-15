@@ -311,7 +311,7 @@ return require('packer').startup(function(use)
   use { 
     'rust-lang-nursery/rustfmt',
     config = function()
-      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR> ]]
+      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR>:w<CR> ]]
     end
   }
 
