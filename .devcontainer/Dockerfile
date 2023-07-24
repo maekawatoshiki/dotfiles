@@ -5,7 +5,7 @@ RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.l
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        ca-certificates tzdata sudo \
+        ca-certificates tzdata sudo zsh \
     && apt-get clean \
     && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
     && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
@@ -21,7 +21,7 @@ RUN set -x \
         --gid 5000 \
         --home-dir /home/uint \
         --create-home \
-        --shell /bin/bash \
+        --shell /bin/zsh \
         uint \
     && chown uint -R /home/uint
 
@@ -61,7 +61,6 @@ RUN set -x \
         g++ \
         pkg-config \
         doxygen \
-        zsh \
         python3 \
         python3-pip \
         python3-venv \
@@ -97,11 +96,21 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Setup node
-RUN curl -L git.io/nodebrew | perl - setup
-RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
-    && nodebrew install v16.15.0 \
-    && nodebrew use v16.15.0 \
-    && npm install -g yarn
+# RUN curl -L git.io/nodebrew | perl - setup
+# RUN export PATH=$HOME/.nodebrew/current/bin:$PATH \
+#     && nodebrew install v16.15.0 \
+#     && nodebrew use v16.15.0 \
+#     && npm install -g yarn
+
+# Install nodenv
+
+RUN git clone https://github.com/nodenv/nodenv.git $HOME/.nodenv
+RUN export PATH="$HOME/.nodenv/bin:$PATH" && \
+    eval "$(nodenv init - sh)" && \
+    git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build && \
+    git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install" && \
+    nodenv install 18.16.0 && \
+    nodenv global 18.16.0
 
 # Build neovim
 
@@ -125,7 +134,7 @@ RUN git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh ~/.oh-my-zsh
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions \
       ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-COPY zshrc ~/.zshrc
-COPY p10k.zsh ~/.p10k.zsh
+COPY zshrc /home/uint/.zshrc
+COPY p10k.zsh /home/uint/.p10k.zsh
 
 CMD ["/bin/zsh"]

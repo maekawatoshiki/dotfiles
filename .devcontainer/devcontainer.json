@@ -3,6 +3,7 @@
     "dockerfile": "Dockerfile",
     "context": ".."
   },
-  "remoteUser": "uint"
+  "remoteUser": "uint",
+  "workspaceFolder": "/home/uint"
 }
 
