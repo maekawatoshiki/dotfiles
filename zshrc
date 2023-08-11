@@ -44,6 +44,12 @@ tmpspace() {
   "$SHELL")
 }
 
+tmpsp() {
+  (
+  d=$(mktemp -d "${TMPDIR:-/tmp}/${1:-tmpspace}.XXXXXXXXXX") && cd "$d" || exit 1
+  "$SHELL")
+}
+
 viewonnx() {
   onnx=${1?Missing ONNX file path.}
 
