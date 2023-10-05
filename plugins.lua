@@ -125,7 +125,7 @@ return require('packer').startup(function(use)
       require("nvim-tree").setup({
         sort_by = "case_sensitive",
         view = {
-          -- adaptive_size = true,
+          adaptive_size = true,
           side = "left"
         },
         renderer = {
@@ -292,7 +292,7 @@ return require('packer').startup(function(use)
   -- python black
   use { 'psf/black',
     config = function()
-      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR> ]]
+      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR>:w<CR> ]]
     end
   }
 
