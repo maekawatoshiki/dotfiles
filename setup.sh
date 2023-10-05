@@ -99,6 +99,14 @@ if [ ! -d ~/.nodenv ]; then
   nodenv global 18.16.0
 fi
 
+# Install pyenv
+
+curl https://pyenv.run | bash
+
+# Install poetry
+
+curl -sSL https://install.python-poetry.org | python3 -
+
 # Install rustup
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
