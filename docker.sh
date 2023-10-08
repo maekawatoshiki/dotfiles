@@ -2,5 +2,18 @@
 
 export DOCKER_BUILDKIT=1
 
-docker build -t uint:dev .
-docker run -w "/home/uint" --rm -it uint:dev
+TAG=base.ext
+
+docker build -t uint:$TAG -f Dockerfile.base.ext .
+
+# Start the container if running in terminal
+if [ -t 0 ]; then
+  docker run \
+    --rm \
+    -it \
+    -e "TERM=xterm-256color" \
+    -w "/work" \
+    -v "$PWD:/work" \
+    -u "$(id -u):$(id -g)" \
+    uint:$TAG
+fi
