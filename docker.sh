@@ -4,7 +4,7 @@ export DOCKER_BUILDKIT=1
 
 TAG=base.ext
 
-docker build -t uint:$TAG -f Dockerfile.base.ext .
+docker build -t uint:$TAG -f Dockerfile .
 
 # Start the container if running in terminal
 if [ -t 0 ]; then
