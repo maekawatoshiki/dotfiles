@@ -242,8 +242,12 @@ return require('packer').startup(function(use)
   ]]
 
   -- indent guide
-  use 'nathanaelkane/vim-indent-guides'
-  vim.cmd [[ let g:indent_guides_enable_on_vim_startup = 1 ]]
+  use {
+    "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require("ibl").setup { }
+    end
+  }
 
   -- GitHub Copilot
   use { 'github/copilot.vim', opt = true, event = "VimEnter" }
