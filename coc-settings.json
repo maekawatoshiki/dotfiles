@@ -1,4 +1,5 @@
 {
   "rust-analyzer.inlayHints.chainingHints": true,
-  "suggest.noselect": true
-}   
+  "suggest.noselect": true,
+  "inlayHint.enable": false
+}
