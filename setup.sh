@@ -116,6 +116,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
 ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 
+# Install tailscale
+
+curl -fsSL https://tailscale.com/install.sh | sh
+
 # Finish!
 
 printf "\e[32mSetup complete!\e[m\n"
