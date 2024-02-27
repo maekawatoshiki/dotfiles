@@ -43,7 +43,9 @@ sudo apt-get install -y --no-install-recommends \
     tmux \
     git-lfs \
     htop \
-    zlib1g-dev
+    zlib1g-dev \
+    openssh-server \
+    rsync
 
 # lld
 sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
