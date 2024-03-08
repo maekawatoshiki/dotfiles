@@ -25,3 +25,7 @@
   syntax-theme = 1337
 [merge]
   conflictstyle=diff3
+[rebase]
+	autostash = true
+[pull]
+	autostash = true
