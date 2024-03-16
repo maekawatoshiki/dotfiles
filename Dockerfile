@@ -1,4 +1,7 @@
 FROM ubuntu:22.04
+ARG USER
+ARG UID
+ARG GID
 
 RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 
@@ -17,26 +20,26 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 RUN set -x \
-    && echo "uint ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/ALL \
+    && echo "${USER} ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/ALL \
     && groupadd \
-        --gid 1000 \
-        uint \
+        --gid ${GID} \
+        ${USER} \
     && useradd \
-        --uid 1000 \
-        --gid 1000 \
-        --home-dir /home/uint \
+        --uid ${UID} \
+        --gid ${GID} \
+        --home-dir /home/${USER} \
         --create-home \
         --shell /bin/zsh \
-        uint \
-    && chown uint -R /home/uint
+        ${USER} \
+    && chown ${USER} -R /home/${USER}
 
-USER uint
+USER ${USER}
 
-WORKDIR /home/uint
+WORKDIR /home/${USER}
 
-COPY --chown=uint:uint . dotfiles
+COPY --chown=${USER}:${USER} . dotfiles
 
-WORKDIR /home/uint/dotfiles
+WORKDIR /home/${USER}/dotfiles
 
 RUN ./setup.sh
 
