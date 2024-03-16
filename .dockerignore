@@ -1,4 +1,6 @@
 *
+!Dockerfile*
+!gitconfig
 !zshrc
 !init.vim
 !plugins.lua
