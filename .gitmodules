@@ -1,4 +1,0 @@
-[submodule "awesome"]
-  ignore = dirty
-	path = awesome
-	url = http://github.com/maekawatoshiki/awesome
