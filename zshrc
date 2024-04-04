@@ -20,6 +20,7 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.cargo/env
 
 alias n='ninja'
+alias t='tmux'
 alias mk='make -j'
 alias grep='grep --color=always'
 alias -g L='|less -R'
@@ -35,7 +36,7 @@ alias pbcopy='xsel --clipboard --input'
 alias bigfiles='du -a ./ | sort -n -r | head -n100 | less'
 
 export PATH=${PATH}:/opt/riscv/bin
-export PATH=${PATH}:/usr/local
+export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:$HOME/.local/bin
 
 tmpspace() {
