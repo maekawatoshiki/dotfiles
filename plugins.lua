@@ -26,7 +26,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- colorschemes
-  use 'sainnhe/everforest'
+  use 'maekawatoshiki/everforest'
   vim.cmd [[ let g:everforest_background = "hard" ]]
   -- NeoBundle 'tyrannicaltoucan/vim-deep-space'
   -- NeoBundle 'ayu-theme/ayu-vim'
