@@ -40,12 +40,14 @@ sudo apt-get install -y --no-install-recommends \
     python3-pip \
     python3-venv \
     wget \
-    tmux \
     git-lfs \
     htop \
     zlib1g-dev \
     openssh-server \
-    rsync
+    rsync \
+    libevent-dev \
+    yacc \
+    libncurses-dev \
 
 # lld
 sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
@@ -114,6 +116,16 @@ curl -sSL https://install.python-poetry.org | python3 -
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 # tmux
+
+(
+  cd ~/work
+  git clone https://github.com/tmux/tmux -b 3.4 --depth 1 \
+      && cd tmux \
+      && ./autogen.sh \
+      && ./configure \
+      && make -j \
+      && sudo make install
+)
 
 git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
 ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
