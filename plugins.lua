@@ -2,32 +2,24 @@
 
 vim.loader.enable()
 
-local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-local group = vim.api.nvim_create_augroup("packer_user_config", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	command = "source <afile> | PackerSync",
-	pattern = "/home/uint/.config/nvim/lua/plugins.lua", -- the name of your plugins file
-	group = group,
-})
-
-local packer_bootstrap = ensure_packer()
-
-return require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim'
-
+require("lazy").setup({
   -- colorschemes
-  use 'maekawatoshiki/everforest'
-  vim.cmd [[ let g:everforest_background = "hard" ]]
+  { 'sainnhe/everforest', config = function() vim.cmd [[ let g:everforest_background = "hard" ]] end },
+  -- use 'maekawatoshiki/everforest'
+  -- vim.cmd [[ let g:everforest_background = "hard" ]]
   -- NeoBundle 'tyrannicaltoucan/vim-deep-space'
   -- NeoBundle 'ayu-theme/ayu-vim'
   -- let ayucolor="mirage"
@@ -41,57 +33,10 @@ return require('packer').startup(function(use)
   -- NeoBundle "EdenEast/nightfox.nvim"
   -- NeoBundle "laniusone/kyotonight.vim"
 
-  -- fzf
-  use 'junegunn/fzf'
-  use 'junegunn/fzf.vim'
-  vim.cmd [[
-    nnoremap <C-p> :Files<CR>
-    nnoremap ,<C-p> :Rg<CR>
-  ]]
-
-  -- Lightline
-  use {
-    'itchyny/lightline.vim',
-    config = function()
-      vim.cmd [[
-        set laststatus=2
-        let g:lightline = {
-              \ 'colorscheme': 'everforest',
-              \ 'mode_map': {'c': 'NORMAL'},
-              \ 'separator': { 'left': "", 'right': "" },
-              \ 'subseparator': { 'left': "", 'right': "" },
-              \ 'active': {
-              \   'left': [
-              \							['mode', 'paste'], 
-              \							['gitgutter', 'fugitive', 'filename'] 
-              \						]
-              \ },
-              \ 'component_function': {
-              \		'gitgutter': 'MyGitGutter'
-              \ }
-              \ }
-      ]]
-    end
-  }
-
-  -- vim-submode
-  use 'kana/vim-submode'
-  vim.cmd [[
-    call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
-    call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
-    call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
-    call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
-    call submode#map('winsize', 'n', '', '>', '<C-w>>')
-    call submode#map('winsize', 'n', '', '<', '<C-w><')
-    call submode#map('winsize', 'n', '', '+', '<C-w>-')
-    call submode#map('winsize', 'n', '', '-', '<C-w>+')
-  ]]
-
   -- nvim-treesitter
-  use { 'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-    opt = true,
-    event = "VimEnter",
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ":TSUpdate", 
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- One of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -113,10 +58,12 @@ return require('packer').startup(function(use)
         },
       }
     end
-  }
+  },
+
+  'tomtom/tcomment_vim',
 
   -- nvim-tree
-  use {
+  {
     'kyazdani42/nvim-tree.lua',
     config = function()
       -- disable netrw at the very start of your init.lua (strongly advised)
@@ -125,6 +72,7 @@ return require('packer').startup(function(use)
       require("nvim-tree").setup({
         sort_by = "case_sensitive",
         view = {
+          width = { max = "23%" },
           adaptive_size = true,
           side = "left"
         },
@@ -215,114 +163,17 @@ return require('packer').startup(function(use)
 
         end
       })
-      vim.cmd [[ nnoremap <silent><C-e> :NvimTreeToggle<CR> ]]
     end
-  }
-  use 'kyazdani42/nvim-web-devicons'
+  },
 
-  -- vim-quickhl
-  use 't9md/vim-quickhl'
-  vim.cmd [[
-    " Highlight the selected word
-    nmap <Space>m <Plug>(quickhl-manual-this)
-    " Highlight the selected text
-    xmap <Space>m <Plug>(quickhl-manual-this)
-    " Disable all highlights
-    nmap <Space>M <Plug>(quickhl-manual-reset)
-  ]]
+  { 'github/copilot.vim' },
 
-  -- vim-toml
-  use 'cespare/vim-toml'
-
-  -- tcomment_vim
-  use 'tomtom/tcomment_vim'
-  vim.cmd [[
-    nmap ,c :TComment<CR>
-    vmap ,c :TComment<CR>
-  ]]
-
-  -- indent guide
-  use {
-    "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require("ibl").setup { }
-    end
-  }
-
-  -- GitHub Copilot
-  use { 'github/copilot.vim', opt = true, event = "VimEnter" }
-
-  -- OpenCL
-  use 'petRUShka/vim-opencl'
-
-  -- TeX
-  use 'lervag/vimtex'
-  vim.cmd [[
-    let g:vimtex_compiler_latexmk = { 'continuous' : 0, 'build_dir' : 'aux' }
-    let g:vimtex_quickfix_open_on_warning = 0
-    let g:tex_flavor = "latex"
-    let g:latex_latexmk_options = '-c'
-    " let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
-    augroup set_latex_compiler
-      autocmd!
-      autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
-    augroup END
-  ]]
-
-  -- PlantUML
-  use 'aklt/plantuml-syntax'
-  vim.cmd [[ au BufRead,BufNewFile *.puml set filetype=plantuml ]]
-
-  -- LLVM TableGen
-  use { 'antiagainst/vim-tablegen', ft = 'tablegen' }
-  vim.cmd [[ au BufRead,BufNewFile *.td set filetype=tablegen ]]
-
-  -- LLVM IR
-  use 'rhysd/vim-llvm'
-
-  -- SATySFi
-  use 'qnighy/satysfi.vim'
-
-  -- Rainbow parentheses
-  use { 'luochen1990/rainbow',
-    config = function()
-      vim.cmd [[ let g:rainbow_active = 1 ]]
-    end
-  }
-
-  -- vim-simple-align
-  use 'kg8m/vim-simple-align'
-
-  -- python black
-  use { 'psf/black',
-    config = function()
-      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR>:w<CR> ]]
-    end
-  }
-
-  -- vim-fugitive (e.g. :Gdiff)
-  use 'tpope/vim-fugitive'
-  use 'airblade/vim-gitgutter'
-  use 'rhysd/github-complete.vim'
-  use 'Shougo/vimproc'
-
-  -- Gist
-  use { 'mattn/vim-gist', config = function() vim.cmd [[ PackerLoad webapi-vim ]] end }
-  use { 'mattn/webapi-vim', opt = true }
-
-  -- Rust
-  use 'rust-lang/rust.vim'
-  use { 
-    'rust-lang-nursery/rustfmt',
-    config = function()
-      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR>:w<CR> ]]
-    end
-  }
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
   -- coc.nvim
-  use {
+  {
     'neoclide/coc.nvim',
-    run = 'zsh -c "yarn install"',
+    build = "npm ci",
     config = function()
       vim.cmd [[
         " inoremap <silent><expr> <TAB>
@@ -338,11 +189,160 @@ return require('packer').startup(function(use)
         command! CC :CocCommand
       ]]
     end
-  }
+  },
 
-  use {
+  -- vim-submode
+  {
+    'kana/vim-submode',
+    config = function()
+      vim.cmd [[
+      call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
+      call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
+      call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>-')
+      call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>+')
+      call submode#map('winsize', 'n', '', '>', '<C-w>>')
+      call submode#map('winsize', 'n', '', '<', '<C-w><')
+      call submode#map('winsize', 'n', '', '+', '<C-w>-')
+      call submode#map('winsize', 'n', '', '-', '<C-w>+')
+      ]]
+    end
+  },
+
+  -- fzf
+  'junegunn/fzf',
+  {
+    'junegunn/fzf.vim',
+    config = function()
+      vim.cmd [[
+        nnoremap <C-p> :Files<CR>
+        nnoremap ,<C-p> :Rg<CR>
+      ]]
+    end
+  },
+
+  -- Lightline
+  {
+    'itchyny/lightline.vim',
+    config = function()
+      vim.cmd [[
+        set laststatus=2
+        let g:lightline = {
+              \ 'colorscheme': 'everforest',
+              \ 'mode_map': {'c': 'NORMAL'},
+              \ 'separator': { 'left': "", 'right': "" },
+              \ 'subseparator': { 'left': "", 'right': "" },
+              \ 'active': {
+              \   'left': [
+              \							['mode', 'paste'], 
+              \							['gitgutter', 'fugitive', 'filename'] 
+              \						]
+              \ },
+              \ 'component_function': {
+              \		'gitgutter': 'MyGitGutter'
+              \ }
+              \ }
+      ]]
+    end
+  },
+
+  'kyazdani42/nvim-web-devicons',
+
+  -- vim-quickhl
+  {
+    't9md/vim-quickhl', config = function()
+      vim.cmd [[
+      " Highlight the selected word
+      nmap <Space>m <Plug>(quickhl-manual-this)
+      " Highlight the selected text
+      xmap <Space>m <Plug>(quickhl-manual-this)
+      " Disable all highlights
+      nmap <Space>M <Plug>(quickhl-manual-reset)
+      ]]
+    end
+  },
+
+  -- vim-toml
+  'cespare/vim-toml',
+
+  -- OpenCL
+  'petRUShka/vim-opencl',
+
+  -- TeX
+  {
+    'lervag/vimtex',
+    config = function()
+      vim.cmd [[
+      let g:vimtex_compiler_latexmk = { 'continuous' : 0, 'build_dir' : 'aux' }
+      let g:vimtex_quickfix_open_on_warning = 0
+      let g:tex_flavor = "latex"
+      let g:latex_latexmk_options = '-c'
+      " let g:vimtex_compiler_latexmk_engines = { '_' : '-pdfdvi' }
+      augroup set_latex_compiler
+      autocmd!
+      autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
+      augroup END
+      ]]
+    end
+  },
+
+  -- PlantUML
+  {
+    'aklt/plantuml-syntax',
+    config = function()
+      vim.cmd [[ au BufRead,BufNewFile *.puml set filetype=plantuml ]]
+    end
+  },
+
+  -- LLVM TableGen
+  -- { 'antiagainst/vim-tablegen', ft = 'tablegen' }
+  -- vim.cmd [[ au BufRead,BufNewFile *.td set filetype=tablegen ]]
+
+  -- LLVM IR
+  'rhysd/vim-llvm',
+
+  -- SATySFi
+  'qnighy/satysfi.vim',
+
+  -- Rainbow parentheses
+  {
+    'luochen1990/rainbow',
+    config = function()
+      vim.cmd [[ let g:rainbow_active = 1 ]]
+    end
+  },
+
+  -- vim-simple-align
+  'kg8m/vim-simple-align',
+
+  -- python black
+  { 'psf/black',
+    config = function()
+      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR>:w<CR> ]]
+    end
+  },
+
+  -- vim-fugitive (e.g. :Gdiff)
+  'tpope/vim-fugitive',
+  'airblade/vim-gitgutter',
+  'rhysd/github-complete.vim',
+  'Shougo/vimproc',
+
+  -- Gist
+  'mattn/vim-gist',
+  'mattn/webapi-vim',
+
+  -- Rust
+  'rust-lang/rust.vim',
+  { 
+    'rust-lang-nursery/rustfmt',
+    config = function()
+      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR>:w<CR> ]]
+    end
+  },
+
+  {
     'phaazon/hop.nvim',
-    branch = 'v2',
+    version = 'v2',
     config = function()
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
       vim.cmd [[ 
@@ -351,10 +351,66 @@ return require('packer').startup(function(use)
     end
   }
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if packer_bootstrap then
-    require('packer').sync()
-  end
-end)
+})
 
+vim.cmd [[
+  nmap ,c :TComment<CR>
+  vmap ,c :TComment<CR>
+]]
+
+vim.cmd [[ nnoremap <silent><C-e> :NvimTreeToggle<CR> ]]
+
+
+--   -- use {
+--   --   'https://codeberg.org/esensar/nvim-dev-container',
+--   --   requires = { 'nvim-treesitter/nvim-treesitter' },
+--   --   config = function()
+--   --     require'devcontainer'.setup { }
+--   --   end
+--   -- }
+--   --
+--
+--   -- use {
+--   --   'chipsenkbeil/distant.nvim',
+--   --   branch = 'v0.3',
+--   --   config = function()
+--   --       local plugin = require('distant')
+--   --       plugin:setup({
+--   --         servers = {
+--   --           ['persica'] = {
+--   --             lsp = {
+--   --               ['Project Distant'] = {
+--   --                 cmd = '/home2/uint/.cargo/bin/rust-analyzer',
+--   --                 root_dir = '/home2/uint/work/altius',
+--   --                 file_types = {'rust'},
+--   --                 on_exit = function(code, signal, client_id)
+--   --                   local prefix = '[Client ' .. tostring(client_id) .. ']'
+--   --                   print(prefix .. ' LSP exited with code ' .. tostring(code))
+--   --
+--   --                   -- Signal can be nil
+--   --                   if signal ~= nil then
+--   --                     print(prefix .. ' Signal ' .. tostring(signal))
+--   --                   end
+--   --                 end,
+--   --                 on_attach = function()
+--   --                   vim.keymap.set('n', 'gD', '<CMD>lua vim.lsp.buf.declaration()<CR>')
+--   --                   vim.keymap.set('n', 'gd', '<CMD>lua vim.lsp.buf.definition()<CR>')
+--   --                   vim.keymap.set('n', 'gh', '<CMD>lua vim.lsp.buf.hover()<CR>')
+--   --                   vim.keymap.set('n', 'gi', '<CMD>lua vim.lsp.buf.implementation()<CR>')
+--   --                   vim.keymap.set('n', 'gr', '<CMD>lua vim.lsp.buf.references()<CR>')
+--   --                 end,
+--   --               }
+--   --             }
+--   --           }
+--   --         }
+--   --       })
+--   --   end
+--   -- }
+--
+--   -- Automatically set up your configuration after cloning packer.nvim
+--   -- Put this at the end after all plugins
+--   if packer_bootstrap then
+--     require('packer').sync()
+--   end
+-- end)
+--
