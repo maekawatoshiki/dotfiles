@@ -1,7 +1,8 @@
-#!/bin/bash -eux
+#!/usr/bin/env bash
+set -eux
 set -o pipefail
 
-if ! command -v bw 2>&1 /dev/null; then
+if ! command -v bw > /dev/null 2>&1; then
   echo "\033[0;31mBitwarden CLI is not installed!\033[0m"
   exit 1
 fi

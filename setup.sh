@@ -90,6 +90,7 @@ ln -s $(pwd)/init.lua $HOME/.config/nvim/init.lua
 if [ ! -d ~/.nodenv ]; then
   ## https://github.com/nodenv/nodenv#basic-github-checkout
   git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+  (cd ~/.nodenv && src/configure && make -C src)
   export PATH="$HOME/.nodenv/bin:$PATH"
   eval "$(nodenv init - zsh)"
 
@@ -99,8 +100,8 @@ if [ ! -d ~/.nodenv ]; then
   ## Install yarn
   git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
 
-  nodenv install 18.16.0
-  nodenv global 18.16.0
+  nodenv install 20.0.0
+  nodenv global 20.0.0
 fi
 
 # Install pyenv
@@ -133,6 +134,10 @@ ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 # Install tailscale
 
 curl -fsSL https://tailscale.com/install.sh | sh
+
+# Install bitwarden cli
+
+yarn global add @bitwarden/cli@2024.6.0
 
 # Finish!
 
