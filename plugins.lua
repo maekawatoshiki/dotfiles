@@ -38,9 +38,10 @@ require("lazy").setup({
     'nvim-treesitter/nvim-treesitter',
     build = ":TSUpdate", 
     config = function()
+      require("nvim-treesitter.install").prefer_git = true
       require'nvim-treesitter.configs'.setup {
         -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-        ensure_installed = "all",
+        ensure_installed = { "c", "cpp", "python", "lua", "rust", "llvm", "go", "bash", "json", "yaml", "toml" },
         -- Install languages synchronously (only applied to `ensure_installed`)
         sync_install = false,
         -- List of parsers to ignore installing
@@ -173,7 +174,7 @@ require("lazy").setup({
   -- coc.nvim
   {
     'neoclide/coc.nvim',
-    build = "npm ci",
+    build = "yarn",
     config = function()
       vim.cmd [[
         " inoremap <silent><expr> <TAB>
