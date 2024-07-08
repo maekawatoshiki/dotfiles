@@ -21,7 +21,7 @@ ENV LC_ALL en_US.UTF-8
 
 RUN set -x \
     && echo "${USER} ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/ALL \
-    && groupadd \
+    && groupadd -o \
         --gid ${GID} \
         ${USER} \
     && useradd \
