@@ -1,4 +1,5 @@
 *
+!dind
 !.git
 !import_ssh_keys.sh
 !Dockerfile*

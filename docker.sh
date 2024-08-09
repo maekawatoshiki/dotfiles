@@ -30,9 +30,9 @@ if [ -t 0 ]; then
   docker run \
     --rm \
     -it \
+    --privileged \
     -e "TERM=xterm-256color" \
     -w "/work" \
     -v "$PWD:/work" \
-    -u "$(id -u):$(id -g)" \
     $NAME:$TAG
 fi
