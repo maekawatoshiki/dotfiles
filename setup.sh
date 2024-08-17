@@ -100,8 +100,8 @@ if [ ! -d ~/.nodenv ]; then
   ## Install yarn
   git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
 
-  nodenv install 20.0.0
-  nodenv global 20.0.0
+  nodenv install 22.6.0
+  nodenv global 22.6.0
 fi
 
 # Install pyenv
