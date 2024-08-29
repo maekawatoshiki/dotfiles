@@ -7,8 +7,8 @@ vim.cmd [[
   set nowritebackup
   set autoindent
   set smartindent
-  set tabstop=2
-  set shiftwidth=2
+  set tabstop=4
+  set shiftwidth=4
   set noswapfile
   set noexpandtab
   set hlsearch
