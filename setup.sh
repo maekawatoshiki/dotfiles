@@ -139,6 +139,10 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 yarn global add @bitwarden/cli@2024.6.0
 
+# Install atuin
+
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
 # Finish!
 
 printf "\e[32mSetup complete!\e[m\n"
