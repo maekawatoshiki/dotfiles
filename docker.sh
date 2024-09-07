@@ -36,3 +36,5 @@ if [ -t 0 ]; then
     -v "$PWD:/work" \
     $NAME:$TAG
 fi
+
+# NOTE: Remember to run `sudo /usr/local/bin/entrypoint.sh` in the container for docker-in-docker!
