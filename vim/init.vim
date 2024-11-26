@@ -1,11 +1,15 @@
 lua vim.loader.enable()
 
+let g:python3_host_prog = 'python3'
+" let g:loaded_python3_provider = 1
+" let g:loaded_pythonx_provider = 1
+
 set nobackup
 set nowritebackup
 set autoindent
 set smartindent
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set noswapfile
 set noexpandtab
 set hlsearch
@@ -46,6 +50,22 @@ hi CursorLineNr cterm=NONE ctermfg=232
 
 lua require('plugins')
 
+function TabsOrSpaces()
+    " Determines whether to use spaces or tabs on the current buffer.
+    if getfsize(bufname("%")) > 256000
+        " File is very large, just use the default.
+        return
+    endif
+
+    let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
+    let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
+
+    if numTabs > numSpaces
+        setlocal noexpandtab
+    endif
+endfunction
+
+autocmd BufReadPost * call TabsOrSpaces()
 
 autocmd BufReadPost *
       \ if line("'\"") > 0 && line ("'\"") <= line("$") |
@@ -57,6 +77,8 @@ autocmd BufRead,BufNewFile *.ll setfiletype llvm
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
 autocmd BufNewFile,BufRead *.zsh-theme setfiletype bash
+autocmd BufNewFile,BufRead *.vsm setfiletype bash
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Force quit by :Q
 command! Q call g:Exitvim()

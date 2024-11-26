@@ -33,6 +33,18 @@ require("lazy").setup({
   -- NeoBundle "EdenEast/nightfox.nvim"
   -- NeoBundle "laniusone/kyotonight.vim"
 
+  -- {
+  --   "TabbyML/vim-tabby",
+  --   lazy = false,
+  --   dependencies = {
+  --     "neovim/nvim-lspconfig",
+  --   },
+  --   init = function()
+  --     vim.g.tabby_agent_start_command = {"npx", "tabby-agent", "--stdio"}
+  --     vim.g.tabby_inline_completion_trigger = "auto"
+  --   end,
+  -- },
+
   -- nvim-treesitter
   {
     'nvim-treesitter/nvim-treesitter',

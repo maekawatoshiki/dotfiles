@@ -5,10 +5,8 @@
 !Dockerfile*
 !gitconfig
 !zshrc
-!init.vim
-!plugins.lua
+!vim/*
 !*.sh
 !p10k.zsh
-!init.lua
 !tmux.conf
 !gitconfig

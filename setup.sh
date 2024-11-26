@@ -85,8 +85,8 @@ mkdir -p ~/work
 
 mkdir -p $HOME/.config
 mkdir -p $HOME/.config/nvim/lua
-ln -s $(pwd)/plugins.lua $HOME/.config/nvim/lua/plugins.lua
-ln -s $(pwd)/init.lua $HOME/.config/nvim/init.lua
+ln -s $(pwd)/vim/plugins.lua $HOME/.config/nvim/lua/plugins.lua
+ln -s $(pwd)/vim/init.lua $HOME/.config/nvim/init.lua
 
 # Install nodenv
 
