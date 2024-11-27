@@ -1,4 +1,4 @@
-#/bin/sh -eux
+#!/bin/sh -eux
 
 export DOCKER_BUILDKIT=1
 
