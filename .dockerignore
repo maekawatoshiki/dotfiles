@@ -2,6 +2,7 @@
 !dind
 !.git
 !import_ssh_keys.sh
+!ssh_config
 !Dockerfile*
 !gitconfig
 !zshrc
