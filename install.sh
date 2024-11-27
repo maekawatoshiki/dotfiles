@@ -8,7 +8,7 @@ git clone http://github.com/maekawatoshiki/dotfiles ~/.dotfiles
 # vim
 ln -sf ~/.dotfiles/vimrc ~/.vimrc
 ln -sf ~/.dotfiles/vim ~/.vim
-ln -sf ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -sf ~/.dotfiles/tmux/tmux.conf ~/.tmux.conf
 
 # zsh
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
