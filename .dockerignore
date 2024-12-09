@@ -4,10 +4,9 @@
 !import_ssh_keys.sh
 !ssh_config
 !Dockerfile*
-!gitconfig
 !zshrc
 !vim/*
 !tmux/*
+!git/*
 !*.sh
 !p10k.zsh
-!gitconfig

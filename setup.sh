@@ -68,7 +68,7 @@ mkdir -p ~/.ssh
 cp ./ssh_config ~/.ssh/config
 
 # git
-ln -s $PWD/gitconfig $HOME/.gitconfig
+ln -s $PWD/git/gitconfig $HOME/.gitconfig
 
 # Build neovim
 
