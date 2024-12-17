@@ -1,0 +1,56 @@
+FROM fedora:42
+ARG USER
+ARG UID
+ARG GID
+
+# Install necessary packages using dnf
+RUN set -x \
+    && dnf makecache \
+    && dnf install -y --setopt=install_weak_deps=False \
+        ca-certificates \
+        tzdata \
+        sudo \
+        glibc-langpack-en \
+        wget \
+        curl \
+        iptables \
+        supervisor \
+        zsh \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf/* \
+    && ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+# Set locale environment variables
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# Configure sudoers and create user
+RUN set -x \
+    && echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USER} \
+    && chmod 0440 /etc/sudoers.d/${USER} \
+    && groupadd -o \
+        --gid ${GID} \
+        ${USER} \
+    && useradd \
+        --uid ${UID} \
+        --gid ${GID} \
+        --home-dir /home/${USER} \
+        --create-home \
+        --shell /bin/zsh \
+        ${USER} \
+    && chown ${USER}:${USER} -R /home/${USER}
+
+USER ${USER}
+
+WORKDIR /home/${USER}
+
+# Copy dotfiles and set up the environment
+COPY --chown=${USER}:${USER} . dotfiles
+
+WORKDIR /home/${USER}/dotfiles
+
+RUN ./setup-fedora.sh
+
+CMD ["/bin/zsh"]
+
