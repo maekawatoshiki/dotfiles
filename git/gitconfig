@@ -25,7 +25,10 @@
   syntax-theme = 1337
 [merge]
   conflictstyle=diff3
+  ff = false
 [rebase]
-	autostash = true
+  autostash = true
 [pull]
-	autostash = true
+  autostash = true
+[gpg]
+  format = ssh
