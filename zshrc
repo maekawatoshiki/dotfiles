@@ -12,6 +12,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(git zsh-autosuggestions)
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#888888,underline"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -80,24 +82,17 @@ export PATH=$PATH:/usr/local/go/bin
 # . $HOME/torch/install/bin/torch-activate
 
 export PATH=${PATH}:$HOME/work/zig/build/bin/
-export PATH=${PATH}:$HOME/go/bin/
 
-# TODO
+# goenv
 export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
-# eval "$(goenv init -)"
-goenv() {
-  # lazy load
-  unfunction "$0"
-  source <(goenv init -)
-  $0 "$@"
-}
+export PATH=${PATH}:$HOME/go/bin/ # TODO: Is this necessary?
+eval "$(goenv init -)"
 
 export PATH="$PATH:${HOME}/work/depot_tools"
 export PATH="$PATH:${HOME}/work/arcanist/bin/"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 bindkey "^P" up-line-or-beginning-search
 bindkey "^N" down-line-or-beginning-search
@@ -107,15 +102,10 @@ export LD_LIBRARY_PATH="/usr/local/cuda/lib64/:$LD_LIBRARY_PATH"
 
 export GPG_TTY=$(tty)
 
+# pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-# eval "$(pyenv init -)"
-pyenv() {
-  # lazy load
-  unfunction "$0"
-  source <(pyenv init -)
-  $0 "$@"
-}
+eval "$(pyenv init -)"
 
 # nodenv
 export PATH="$HOME/.nodenv/bin:$PATH"
