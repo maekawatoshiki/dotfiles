@@ -7,10 +7,9 @@ vim.cmd [[
     set nowritebackup
     set autoindent
     set smartindent
-    set tabstop=4
-    set shiftwidth=4
+    set tabstop=2
+    set shiftwidth=2
     set noswapfile
-    set noexpandtab
     set hlsearch
     set title
     set nowrap
@@ -125,6 +124,6 @@ vim.cmd [[
 
     filetype plugin indent on
     syntax enable
-    colorscheme everforest
+    colorscheme caret
 ]]
 
