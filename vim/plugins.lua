@@ -32,7 +32,7 @@ require("lazy").setup({
   -- let g:tokyonight_italic_functions = 1
   -- NeoBundle "EdenEast/nightfox.nvim"
   -- NeoBundle "laniusone/kyotonight.vim"
-  { 'projekt0n/caret.nvim', lazy = false },
+  -- { 'projekt0n/caret.nvim', lazy = false },
   -- {
   --   "TabbyML/vim-tabby",
   --   lazy = false,
@@ -415,8 +415,7 @@ require("lazy").setup({
   },
 
   {
-    'phaazon/hop.nvim',
-    version = 'v2',
+    'maekawatoshiki/hop.nvim',
     config = function()
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
       vim.cmd [[ 

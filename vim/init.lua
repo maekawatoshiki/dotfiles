@@ -124,6 +124,6 @@ vim.cmd [[
 
     filetype plugin indent on
     syntax enable
-    colorscheme caret
+    colorscheme everforest
 ]]
 
