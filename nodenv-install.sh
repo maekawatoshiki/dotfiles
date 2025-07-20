@@ -1,3 +1,4 @@
+#!/bin/bash
 # https://github.com/nodenv/nodenv#basic-github-checkout
 
 git clone https://github.com/nodenv/nodenv.git ~/.nodenv

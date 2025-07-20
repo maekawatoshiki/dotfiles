@@ -16,12 +16,12 @@ fi
 DOCKERFILE_UPDATE_TIME=$(date +%s -r Dockerfile.fedora)
 
 # Rebuild the image if Dockerfile is updated
-if [ $DOCKERFILE_UPDATE_TIME -gt $IMG_UPDATE_TIME ]; then
+if [ "$DOCKERFILE_UPDATE_TIME" -gt "$IMG_UPDATE_TIME" ]; then
   docker build \
     -t $NAME:$TAG \
     --build-arg USER=$USER \
-    --build-arg UID=$(id -u) \
-    --build-arg GID=$(id -g) \
+    --build-arg UID="$(id -u)" \
+    --build-arg GID="$(id -g)" \
     -f Dockerfile.fedora .
 fi
 
@@ -33,7 +33,7 @@ if [ -t 0 ]; then
     --privileged \
     -e "TERM=xterm-256color" \
     -w "/work" \
-    -v "$PWD:/work" \
+    -v "${PWD}:/work" \
     $NAME:$TAG
 fi
 

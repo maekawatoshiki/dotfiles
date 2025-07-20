@@ -1,10 +1,10 @@
-#/bin/sh -eux
+#!/bin/sh -eux
 
 export DOCKER_BUILDKIT=1
 
 TAG=cuda
 
-docker build -t uint:$TAG -f Dockerfile.cuda .
+docker build -t uint:"$TAG" -f Dockerfile.cuda .
 
 # Start the container if running in terminal
 if [ -t 0 ]; then
@@ -13,7 +13,7 @@ if [ -t 0 ]; then
     -it \
     -e "TERM=xterm-256color" \
     -w "/work" \
-    -v "$PWD:/work" \
+    -v "${PWD}:/work" \
     -u "$(id -u):$(id -g)" \
-    uint:$TAG
+    uint:"$TAG"
 fi

@@ -16,9 +16,9 @@ RUN set -x \
     && echo 'Asia/Tokyo' >/etc/timezone
 
 RUN locale-gen en_US.UTF-8  
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 #
 # ↓ Docker in Docker (ref. https://github.com/cruizba/ubuntu-dind/blob/083bb8b7474d528ae75058079346a7a120bf9d2a/ubuntu-jammy.Dockerfile)

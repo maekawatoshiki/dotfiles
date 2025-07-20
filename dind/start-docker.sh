@@ -21,8 +21,7 @@ INFO "Starting supervisor"
 /usr/bin/supervisord -n >> /dev/null 2>&1 &
 
 INFO "Waiting for docker to be running"
-wait_for_process dockerd
-if [ $? -ne 0 ]; then
+if ! wait_for_process dockerd; then
     ERROR "dockerd is not running after max time"
     exit 1
 else
