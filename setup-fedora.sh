@@ -53,8 +53,8 @@ sudo dnf install -y \
 # zsh
 git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh ~/.oh-my-zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions \
-    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/themes/powerlevel10k"
 
 cp ./zshrc ~/.zshrc
 cp ./p10k.zsh ~/.p10k.zsh
@@ -63,7 +63,7 @@ mkdir -p ~/.ssh
 cp ./ssh_config ~/.ssh/config
 
 # git
-ln -s "${PWD}/git/gitconfig" "$HOME/.gitconfig"
+ln -s "${PWD}/git/gitconfig" "${HOME}/.gitconfig"
 
 # Build neovim
 
@@ -82,16 +82,16 @@ mkdir -p ~/work
 
 if [ ! -d ~/.goenv ]; then
   git clone https://github.com/go-nv/goenv.git ~/.goenv
-  export GOENV_ROOT="$HOME/.goenv"
-  export PATH="$GOENV_ROOT/bin:$PATH"
+  export GOENV_ROOT="${HOME}/.goenv"
+  export PATH="${GOENV_ROOT}/bin:${PATH}"
   eval "$(goenv init -)"
   
   goenv install 1.24.5
   goenv global 1.24.5
 fi
 
-mkdir -p "$HOME/.config"
-mkdir -p "$HOME/.config/nvim/lua"
-ln -s "${PWD}/vim/plugins.lua" "$HOME/.config/nvim/lua/plugins.lua"
-ln -s "${PWD}/vim/init.lua" "$HOME/.config/nvim/init.lua"
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.config/nvim/lua"
+ln -s "${PWD}/vim/plugins.lua" "${HOME}/.config/nvim/lua/plugins.lua"
+ln -s "${PWD}/vim/init.lua" "${HOME}/.config/nvim/init.lua"
 

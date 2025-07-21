@@ -16,7 +16,7 @@ fi
 DOCKERFILE_UPDATE_TIME=$(date +%s -r Dockerfile)
 
 # Rebuild the image if Dockerfile is updated
-if [ "$DOCKERFILE_UPDATE_TIME" -gt "$IMG_UPDATE_TIME" ]; then
+if [ "${DOCKERFILE_UPDATE_TIME}" -gt "${IMG_UPDATE_TIME}" ]; then
   docker build \
     -t "${NAME}:${TAG}" \
     --build-arg USER="${USER}" \

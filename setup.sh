@@ -58,8 +58,8 @@ sudo update-alternatives --auto "ld"
 # zsh
 git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh ~/.oh-my-zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions \
-    "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/themes/powerlevel10k"
 
 cp ./zshrc ~/.zshrc
 cp ./p10k.zsh ~/.p10k.zsh
@@ -68,7 +68,7 @@ mkdir -p ~/.ssh
 cp ./ssh_config ~/.ssh/config
 
 # git
-ln -s "${PWD}/git/gitconfig" "$HOME/.gitconfig"
+ln -s "${PWD}/git/gitconfig" "${HOME}/.gitconfig"
 
 # Build neovim
 
@@ -83,10 +83,10 @@ mkdir -p ~/work
       && sudo make -j CMAKE_BUILD_TYPE=Release install
 )
 
-mkdir -p "$HOME/.config"
-mkdir -p "$HOME/.config/nvim/lua"
-ln -s "${PWD}/vim/plugins.lua" "$HOME/.config/nvim/lua/plugins.lua"
-ln -s "${PWD}/vim/init.lua" "$HOME/.config/nvim/init.lua"
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.config/nvim/lua"
+ln -s "${PWD}/vim/plugins.lua" "${HOME}/.config/nvim/lua/plugins.lua"
+ln -s "${PWD}/vim/init.lua" "${HOME}/.config/nvim/init.lua"
 
 # Install nodenv
 
@@ -94,11 +94,11 @@ if [ ! -d ~/.nodenv ]; then
   ## https://github.com/nodenv/nodenv#basic-github-checkout
   git clone https://github.com/nodenv/nodenv.git ~/.nodenv
   (cd ~/.nodenv && src/configure && make -C src)
-  export PATH="$HOME/.nodenv/bin:$PATH"
+  export PATH="${HOME}/.nodenv/bin:${PATH}"
   eval "$(nodenv init - zsh)"
 
   ## For some reason, we need this.
-  git clone https://github.com/nodenv/node-build.git "$(nodenv root)"/plugins/node-build
+  git clone https://github.com/nodenv/node-build.git "$(nodenv root)/plugins/node-build"
 
   ## Install yarn
   git clone https://github.com/pine/nodenv-yarn-install.git "$(nodenv root)/plugins/nodenv-yarn-install"
@@ -115,8 +115,8 @@ curl https://pyenv.run | bash
 
 if [ ! -d ~/.goenv ]; then
   git clone https://github.com/go-nv/goenv.git ~/.goenv
-  export GOENV_ROOT="$HOME/.goenv"
-  export PATH="$GOENV_ROOT/bin:$PATH"
+  export GOENV_ROOT="${HOME}/.goenv"
+  export PATH="${GOENV_ROOT}/bin:${PATH}"
   eval "$(goenv init -)"
 
   goenv install 1.24.5
@@ -144,7 +144,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 )
 
 git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect ~/.tmux-resurrect
-ln -s "${PWD}/tmux/tmux.conf" "$HOME/.tmux.conf"
+ln -s "${PWD}/tmux/tmux.conf" "${HOME}/.tmux.conf"
 
 # Install tailscale
 
