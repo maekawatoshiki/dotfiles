@@ -183,26 +183,127 @@ require("lazy").setup({
 
   { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 
-  -- coc.nvim
+
   {
-    'neoclide/coc.nvim',
-    build = "yarn",
+    'williamboman/mason.nvim',
+    build = ':MasonUpdate',
     config = function()
-      vim.cmd [[
-        " inoremap <silent><expr> <TAB>
-        "      \ coc#pum#visible() ? coc#pum#next(1):
-        "      \ coc#refresh()
-        inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-        inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                                      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-        nmap <silent> gd <Plug>(coc-definition)
-        nmap <silent> gy <Plug>(coc-type-definition)
-        nmap <silent> gi <Plug>(coc-implementation)
-        nmap <silent> gr <Plug>(coc-references)
-        command! CC :CocCommand
-      ]]
+      require('mason').setup()
+    end,
+  },
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+    dependencies = { 'williamboman/mason.nvim' },
+    config = function()
+      require('mason-lspconfig').setup {
+        ensure_installed = {
+          'pyright', 'lua_ls', 'rust_analyzer', 'clangd',
+          'gopls', 'bashls', 'jsonls', 'yamlls', 'taplo',
+        },
+      }
     end
   },
+
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+    },
+    config = function()
+      local opts = { noremap = true, silent = true }
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition,       opts)
+      vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition,  opts)
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation,   opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references,       opts)
+      vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,   opts)
+      vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', 'K',  vim.lsp.buf.hover,            opts)
+    end,
+  },
+
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'saadparwaiz1/cmp_luasnip',
+      'L3MON4D3/LuaSnip',
+      'onsails/lspkind.nvim',
+    },
+    config = function()
+      local cmp     = require('cmp')
+      local luasnip = require('luasnip')
+      require('luasnip.loaders.from_vscode').lazy_load()
+
+      cmp.setup({
+        snippet = {
+          expand = function(args) luasnip.lsp_expand(args.body) end,
+        },
+        mapping = cmp.mapping.preset.insert({
+          ['<TAB>'] = cmp.mapping(function(fb)
+            if cmp.visible() then cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+            else fb() end
+          end, { 'i', 's' }),
+          ['<S-TAB>'] = cmp.mapping(function(fb)
+            if cmp.visible() then cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then luasnip.jump(-1)
+            else fb() end
+          end, { 'i', 's' }),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        }),
+        sources = {
+          { name = 'nvim_lsp' },
+          { name = 'luasnip' },
+          { name = 'buffer' },
+          { name = 'path'   },
+        },
+        formatting = {
+          format = require('lspkind').cmp_format({
+            mode = 'symbol_text',
+            maxwidth = 50,
+          }),
+        },
+      })
+    end,
+  },
+
+  {
+    'kevinhwang91/nvim-bqf',
+    ft = 'qf',
+    opts = {
+      auto_enable  = true,
+      preview = { auto_preview = true },
+      func_map = {
+        open = '', -- Open preview when line focused
+        openc = '<CR>' -- Close preview by enter
+      },
+    }
+  },
+
+
+  -- DEPRECATED: coc.nvim
+  -- {
+  --   'neoclide/coc.nvim',
+  --   build = "yarn",
+  --   config = function()
+  --     vim.cmd [[
+  --       " inoremap <silent><expr> <TAB>
+  --       "      \ coc#pum#visible() ? coc#pum#next(1):
+  --       "      \ coc#refresh()
+  --       inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+  --       inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+  --                                     \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  --       nmap <silent> gd <Plug>(coc-definition)
+  --       nmap <silent> gy <Plug>(coc-type-definition)
+  --       nmap <silent> gi <Plug>(coc-implementation)
+  --       nmap <silent> gr <Plug>(coc-references)
+  --       command! CC :CocCommand
+  --     ]]
+  --   end
+  -- },
 
   -- vim-submode
   {

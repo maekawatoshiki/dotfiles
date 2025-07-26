@@ -42,7 +42,7 @@ vim.cmd [[
     set background=dark
     set list
     set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
-    set pumblend=30
+    set pumblend=10
     set cursorline
     hi CursorLineNr cterm=NONE ctermfg=232
     set clipboard+=unnamedplus
