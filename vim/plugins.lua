@@ -185,6 +185,21 @@ require("lazy").setup({
 
 
   {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+        require('lspsaga').setup {}
+        vim.keymap.set("n", "K",  "<cmd>Lspsaga hover_doc<CR>")
+        vim.o.updatetime = 250
+        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+            callback = function()
+                vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
+            end,
+        })
+
+    end
+  },
+
+  {
     'williamboman/mason.nvim',
     build = ':MasonUpdate',
     config = function()
@@ -242,11 +257,11 @@ require("lazy").setup({
           expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<TAB>'] = cmp.mapping(function(fb)
-            if cmp.visible() then cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
-            else fb() end
-          end, { 'i', 's' }),
+          -- ['<TAB>'] = cmp.mapping(function(fb)
+          --   if cmp.visible() then cmp.select_next_item()
+          --   elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+          --   else fb() end
+          -- end, { 'i', 's' }),
           ['<S-TAB>'] = cmp.mapping(function(fb)
             if cmp.visible() then cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then luasnip.jump(-1)
