@@ -91,9 +91,7 @@ ln -s "${PWD}/vim/init.lua" "${HOME}/.config/nvim/init.lua"
 # Install nodenv
 
 if [ ! -d ~/.nodenv ]; then
-  ## https://github.com/nodenv/nodenv#basic-github-checkout
   git clone https://github.com/nodenv/nodenv.git ~/.nodenv
-  (cd ~/.nodenv && src/configure && make -C src)
   export PATH="${HOME}/.nodenv/bin:${PATH}"
   eval "$(nodenv init - zsh)"
 
