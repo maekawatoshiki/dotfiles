@@ -83,12 +83,6 @@ export PATH="${PATH}:/usr/local/go/bin"
 
 export PATH="${PATH}:${HOME}/work/zig/build/bin/"
 
-# goenv
-export GOENV_ROOT="${HOME}/.goenv"
-export PATH="${GOENV_ROOT}/bin:${PATH}"
-export PATH="${PATH}:${HOME}/go/bin/" # TODO: Is this necessary?
-eval "$(goenv init -)"
-
 export PATH="${PATH}:${HOME}/work/depot_tools"
 export PATH="${PATH}:${HOME}/work/arcanist/bin/"
 

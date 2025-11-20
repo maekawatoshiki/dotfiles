@@ -109,18 +109,6 @@ fi
 
 curl https://pyenv.run | bash
 
-# Install goenv
-
-if [ ! -d ~/.goenv ]; then
-  git clone https://github.com/go-nv/goenv.git ~/.goenv
-  export GOENV_ROOT="${HOME}/.goenv"
-  export PATH="${GOENV_ROOT}/bin:${PATH}"
-  eval "$(goenv init -)"
-
-  goenv install 1.24.5
-  goenv global 1.24.5
-fi
-
 # Install poetry
 
 curl -sSL https://install.python-poetry.org | python3 -

@@ -78,20 +78,7 @@ mkdir -p ~/work
 #       && sudo make -j CMAKE_BUILD_TYPE=Release install
 # )
 
-# Install goenv
-
-if [ ! -d ~/.goenv ]; then
-  git clone https://github.com/go-nv/goenv.git ~/.goenv
-  export GOENV_ROOT="${HOME}/.goenv"
-  export PATH="${GOENV_ROOT}/bin:${PATH}"
-  eval "$(goenv init -)"
-  
-  goenv install 1.24.5
-  goenv global 1.24.5
-fi
-
 mkdir -p "${HOME}/.config"
 mkdir -p "${HOME}/.config/nvim/lua"
 ln -s "${PWD}/vim/plugins.lua" "${HOME}/.config/nvim/lua/plugins.lua"
 ln -s "${PWD}/vim/init.lua" "${HOME}/.config/nvim/init.lua"
-
