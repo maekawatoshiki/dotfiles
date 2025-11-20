@@ -79,8 +79,8 @@ mkdir -p ~/work
   git clone https://github.com/neovim/neovim --depth 1 --recursive \
       && cd neovim \
       && CC=/usr/lib/ccache/clang CXX=/usr/lib/ccache/clang++ \
-          make -j CMAKE_BUILD_TYPE=Release \
-      && sudo make -j CMAKE_BUILD_TYPE=Release install
+          make CMAKE_BUILD_TYPE=Release -j \
+      && sudo make CMAKE_BUILD_TYPE=Release install -j
 )
 
 mkdir -p "${HOME}/.config"
