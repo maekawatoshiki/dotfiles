@@ -538,8 +538,10 @@ require("lazy").setup({
         nnoremap <silent> H :lua require'hop'.hint_patterns({}, vim.fn['getreg']('/'))<CR>
       ]]
     end
-  }
+  },
 
+  -- Auto detect indent settings
+  'tpope/vim-sleuth'
 })
 
 vim.cmd [[

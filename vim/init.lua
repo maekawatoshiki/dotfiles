@@ -60,23 +60,6 @@ vim.cmd [[
     autocmd BufNewFile,BufRead *.tex nmap <C-c> <plug>(vimtex-compile)
     autocmd BufNewFile,BufRead *.zsh-theme setfiletype bash
 
-    function TabsOrSpaces()
-        " Determines whether to use spaces or tabs on the current buffer.
-        if getfsize(bufname("%")) > 256000
-            " File is very large, just use the default.
-            return
-        endif
-
-        let numTabs=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^\\t"'))
-        let numSpaces=len(filter(getbufline(bufname("%"), 1, 250), 'v:val =~ "^ "'))
-
-        if numTabs > numSpaces
-            setlocal noexpandtab
-        endif
-    endfunction
-
-    autocmd BufReadPost * call TabsOrSpaces()
-
     autocmd BufNewFile,BufRead *.vsm setfiletype bash
     autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
@@ -100,27 +83,6 @@ vim.cmd [[
         endif
     endfunction
     autocmd VimEnter * nested if @% == '' && s:GetBufByte() == 0 | source ~/.vimsession | endif
-
-    " function! MyGitGutter()
-    " 	if ! exists('*GitGutterGetHunkSummary')
-    " 				\ || ! get(g:, 'gitgutter_enabled', 0)
-    " 				\ || winwidth('.') <= 90
-    " 		return ''
-    " 	endif
-    " 	let symbols = [
-    " 				\ g:gitgutter_sign_added . ' ',
-    " 				\ g:gitgutter_sign_modified . ' ',
-    " 				\ g:gitgutter_sign_removed . ' '
-    " 				\ ]
-    " 	let hunks = GitGutterGetHunkSummary()
-    " 	let ret = []
-    " 	for i in [0, 1, 2]
-    " 		if hunks[i] > 0
-    " 			call add(ret, symbols[i] . hunks[i])
-    " 		endif
-    " 	endfor
-    " 	return join(ret, ' ')
-    " endfunction
 
     filetype plugin indent on
     syntax enable
