@@ -9,55 +9,73 @@
   home.homeDirectory = "/Users/uint";
 
   home.packages = with pkgs; [
+    # version control
     git
     git-lfs
+
+    # network
     curl
     wget
+
+    # editor
     neovim
+
+    # term
+    tmux
+    zsh
+
+    # cli utils
+    atuin
+    btop
+    coreutils
+    ffmpeg
+    findutils
+    fzf
+    htop
+    imagemagick
+    jq
+    lsd
+    pv
+    slackdump
+    tree
+    watch
+
+    # build toolchain
+    boost.dev
+    ccache
     clang
     clang-tools
-    lld
-    ccache
     cmake
+    lld
+    llvmPackages_21.openmp
     ninja
     pkg-config
-    boost.dev
-    qemu
+    shellcheck
+
+    # languages
     go
     nodenv
     pyenv
-    zsh
-    tmux
-    fzf
-    btop
-    htop
-    shellcheck
-    coreutils
-    findutils
-    tree
-    jq
-    watch
-    pv
-    ffmpeg
-    imagemagick
+
+    # virtualization
+    qemu
+
+    # build deps
+    bzip2
+    gnutls
+    libffi
+    libiconv
+    mimalloc
+    openssl
+    protobuf
+    readline
+    sqlite
+    tcl
+    tk
     xz
     xz.dev
     zlib
     zlib.dev
-    libiconv
-    gnutls
-    llvmPackages_21.openmp
-    mimalloc
-    protobuf
-    readline
-    libffi
-    openssl
-    sqlite
-    bzip2
-    tk
-    tcl
-    openssl
-    slackdump
   ];
 
   programs.home-manager.enable = true;
