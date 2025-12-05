@@ -64,7 +64,7 @@ cp ./zshrc ~/.zshrc
 cp ./p10k.zsh ~/.p10k.zsh
 
 mkdir -p ~/.ssh
-cp ./ssh_config ~/.ssh/config
+ln -s "${PWD}/ssh/config" "${HOME}/.ssh/config"
 
 # git
 ln -s "${PWD}/git/gitconfig" "${HOME}/.gitconfig"
