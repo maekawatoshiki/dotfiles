@@ -1,4 +1,5 @@
-#!/bin/bash -eux
+#!/bin/bash
+set -euxo pipefail
 
 # dependencies
 sudo apt-get update
@@ -55,6 +56,7 @@ sudo update-alternatives --install "/usr/bin/ld" "ld" "/usr/bin/ld.lld" 30 \
 sudo update-alternatives --auto "ld"
 
 # zsh
+ZSH_CUSTOM="${HOME}/.oh-my-zsh-custom"
 git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh ~/.oh-my-zsh
 git clone https://github.com/zsh-users/zsh-autosuggestions \
     "${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
@@ -133,8 +135,16 @@ ln -s "${PWD}/tmux/tmux.conf" "${HOME}/.tmux.conf"
 
 # Install tailscale
 
-if [ "${SETUP_TAILSCALE:-0}" = "1" ]; then
+answer="n"
+if [ -t 0 ]; then
+    printf "Do you want to install Tailscale? (y/N): "
+    read -r answer || answer="n"
+fi
+
+if [[ "$answer" =~ ^[Yy]$ ]]; then
     curl -fsSL https://tailscale.com/install.sh | sh
+else
+    echo "Skipping Tailscale installation."
 fi
 
 # Install bitwarden cli
