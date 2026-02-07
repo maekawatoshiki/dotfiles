@@ -19,6 +19,8 @@
 
     # editor
     neovim
+    nixd
+    helix
 
     # term
     tmux
@@ -39,10 +41,17 @@
     slackdump
     tree
     watch
+    lolcat
+    xan
+    hadolint
+    mdcat
+    scdoc
+    cscope
 
     # build toolchain
     boost.dev
     ccache
+    clangWrapper
     clang
     clang-tools
     cmake
