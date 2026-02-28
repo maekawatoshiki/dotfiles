@@ -188,6 +188,7 @@ require("lazy").setup({
     'nvimdev/lspsaga.nvim',
     config = function()
         require('lspsaga').setup {}
+        vim.opt.signcolumn = "yes"
         vim.keymap.set("n", "K",  "<cmd>Lspsaga hover_doc<CR>")
         vim.o.updatetime = 250
         vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -448,11 +449,30 @@ require("lazy").setup({
   -- vim-simple-align
   'kg8m/vim-simple-align',
 
-  -- python black
-  { 'psf/black',
+  -- Formatter
+  {
+    'stevearc/conform.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    cmd = { "ConformInfo" },
     config = function()
-      vim.cmd [[ autocmd FileType python nnoremap <C-b> :Black<CR>:w<CR> ]]
-    end
+      local conform = require("conform")
+
+      conform.setup({
+        formatters_by_ft = {
+          python = { "black" },
+          rust = { "rustfmt" },
+        },
+      })
+
+      -- Format with <C-b>
+      vim.keymap.set("n", "<C-b>", function()
+        conform.format({
+          timeout_ms = 3000,
+          lsp_fallback = false,
+        })
+        vim.cmd("write")
+      end, { noremap = true, desc = "Format and save" })
+    end,
   },
 
   -- vim-fugitive (e.g. :Gdiff)
@@ -523,12 +543,6 @@ require("lazy").setup({
 
   -- Rust
   'rust-lang/rust.vim',
-  { 
-    'rust-lang-nursery/rustfmt',
-    config = function()
-      vim.cmd [[ autocmd FileType rust nnoremap <C-b> :RustFmt<CR>:w<CR> ]]
-    end
-  },
 
   {
     'maekawatoshiki/hop.nvim',
