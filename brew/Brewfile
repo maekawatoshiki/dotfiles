@@ -1,0 +1,74 @@
+# Homebrew bundle for macOS arm64.
+#
+# ```
+# brew bundle --file ./brew/Brewfile
+# brew bundle check --file ./brew/Brewfile
+# ```
+
+# version control
+brew "git"
+brew "git-lfs"
+
+# network
+brew "curl"
+brew "wget"
+
+# editor
+brew "neovim"
+brew "helix"
+
+# terminal
+brew "tmux"
+brew "zsh"
+
+# cli utils
+brew "atuin"
+brew "btop"
+brew "coreutils"
+brew "ffmpeg"
+brew "findutils"
+brew "fzf"
+brew "htop"
+brew "imagemagick"
+brew "jq"
+brew "lsd"
+brew "pv"
+brew "tree"
+brew "watch"
+brew "hadolint"
+brew "mdcat"
+brew "scdoc"
+brew "cscope"
+brew "exiftool"
+brew "rsync"
+
+# build toolchain
+brew "boost"
+brew "ccache"
+brew "llvm"
+brew "cmake"
+brew "ninja"
+brew "pkg-config"
+brew "shellcheck"
+brew "libomp"
+
+# languages
+brew "go"
+brew "nodenv"
+brew "pyenv"
+
+# virtualization
+brew "qemu"
+
+# build deps
+brew "bzip2"
+brew "gnutls"
+brew "libffi"
+brew "mimalloc"
+brew "openssl@3"
+brew "protobuf"
+brew "readline"
+brew "sqlite"
+brew "tcl-tk"
+brew "xz"
+brew "zlib"
