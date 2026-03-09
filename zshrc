@@ -6,6 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" 
 fi
 
 export ZSH="${HOME}/.oh-my-zsh"
+export ZSH_CUSTOM="${HOME}/.oh-my-zsh-custom"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # ZSH_THEME="mortalscumbag"
@@ -96,12 +97,14 @@ export LD_LIBRARY_PATH="/usr/local/cuda/lib64/:${LD_LIBRARY_PATH}"
 
 export GPG_TTY="$(tty)"
 
-# pyenv
 export PYENV_ROOT="${HOME}/.pyenv"
 export PATH="${PYENV_ROOT}/bin:${PATH}"
 eval "$(pyenv init -)"
 
-# nodenv
 export PATH="${HOME}/.nodenv/bin:${PATH}"
 export PATH="${HOME}/.yarn/bin:${PATH}"
 eval "$(nodenv init - zsh)"
+
+if command -v atuin >/dev/null 2>&1; then
+  eval "$(atuin init zsh)"
+fi
