@@ -105,6 +105,5 @@ export PATH="${HOME}/.nodenv/bin:${PATH}"
 export PATH="${HOME}/.yarn/bin:${PATH}"
 eval "$(nodenv init - zsh)"
 
-if command -v atuin >/dev/null 2>&1; then
-  eval "$(atuin init zsh)"
-fi
+. "${HOME}/.atuin/bin/env"
+eval "$(atuin init zsh)"
