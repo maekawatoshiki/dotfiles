@@ -48,28 +48,21 @@ require("lazy").setup({
   -- nvim-treesitter
   {
     'nvim-treesitter/nvim-treesitter',
-    build = ":TSUpdate", 
+    lazy = false,
+    commit = '4916d6592ede8c07973490d9322f187e07dfefac', -- 2026-04-03
+    build = function()
+      local treesitter_parsers = { "c", "cpp", "python", "lua", "rust", "llvm", "go", "bash", "json", "yaml", "toml", "markdown", "markdown_inline" }
+      require('nvim-treesitter').install(treesitter_parsers)
+    end,
     config = function()
-      require("nvim-treesitter.install").prefer_git = true
-      require'nvim-treesitter.configs'.setup {
-        -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-        ensure_installed = { "c", "cpp", "python", "lua", "rust", "llvm", "go", "bash", "json", "yaml", "toml" },
-        -- Install languages synchronously (only applied to `ensure_installed`)
-        sync_install = false,
-        -- List of parsers to ignore installing
-        ignore_install = { "javascript" },
-        highlight = {
-          -- `false` will disable the whole extension
-          enable = true,
-          -- list of language that will be disabled
-          -- disable = { "c", "rust" },
-          -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-          -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-          -- Using this option may slow down your editor, and you may see some duplicate highlights.
-          -- Instead of true it can also be a list of languages
-          additional_vim_regex_highlighting = false,
-        },
-      }
+      require('nvim-treesitter').setup()
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { "c", "cpp", "python", "lua", "rust", "llvm", "go", "sh", "bash", "json", "yaml", "toml", "markdown" },
+        callback = function(args)
+          pcall(vim.treesitter.start, args.buf)
+        end,
+      })
     end
   },
 
