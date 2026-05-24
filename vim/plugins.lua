@@ -15,9 +15,20 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local function fork(repo, commit, spec)
+  spec = spec or {}
+  spec[1] = "maekawatoshiki/" .. repo
+  spec.commit = commit
+  return spec
+end
+
 require("lazy").setup({
   -- colorschemes
-  { 'sainnhe/everforest', config = function() vim.cmd [[ let g:everforest_background = "hard" ]] end },
+  fork('everforest', 'aeef62ee97872d2557d25904d160ec93a4a355f8', -- 2026-04-16
+  {
+    config = function() vim.cmd [[ let g:everforest_background = "hard" ]] end
+  }),
+  -- { 'morhetz/gruvbox', config = function() vim.cmd [[ let g:gruvbox_contrast_dark = 'hard' ]] end },
   -- use 'maekawatoshiki/everforest'
   -- vim.cmd [[ let g:everforest_background = "hard" ]]
   -- NeoBundle 'tyrannicaltoucan/vim-deep-space'
@@ -46,10 +57,9 @@ require("lazy").setup({
   -- },
 
   -- nvim-treesitter
+  fork('nvim-treesitter', '4916d6592ede8c07973490d9322f187e07dfefac', -- 2026-04-03
   {
-    'nvim-treesitter/nvim-treesitter',
     lazy = false,
-    commit = '4916d6592ede8c07973490d9322f187e07dfefac', -- 2026-04-03
     build = function()
       local treesitter_parsers = { "c", "cpp", "python", "lua", "rust", "llvm", "go", "bash", "json", "yaml", "toml", "markdown", "markdown_inline" }
       require('nvim-treesitter').install(treesitter_parsers)
@@ -64,13 +74,13 @@ require("lazy").setup({
         end,
       })
     end
-  },
+  }),
 
-  'tomtom/tcomment_vim',
+  fork('tcomment_vim', '48ab639a461d9b8344f7fee06cb69b4374863b13'), -- 2024-03-25
 
   -- nvim-tree
+  fork('nvim-tree.lua', 'f9bfc0059eca24546b69a7006110463da4808f8f', -- 2026-05-01
   {
-    'kyazdani42/nvim-tree.lua',
     config = function()
       -- disable netrw at the very start of your init.lua (strongly advised)
       vim.g.loaded = 1
@@ -170,15 +180,15 @@ require("lazy").setup({
         end
       })
     end
-  },
+  }),
 
-  { 'github/copilot.vim' },
+  fork('copilot.vim', 'a12fd5672110c8aa7e3c8419e28c96943ca179be'), -- 2026-01-09
 
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  fork('indent-blankline.nvim', 'd28a3f70721c79e3c5f6693057ae929f3d9c0a03', { main = "ibl", opts = {} }), -- 2026-02-17
 
 
+  fork('lspsaga.nvim', 'c532fb86c3d211c5829ad58d2a0783012739bb65', -- 2026-04-21
   {
-    'nvimdev/lspsaga.nvim',
     config = function()
         require('lspsaga').setup {}
         vim.opt.signcolumn = "yes"
@@ -191,19 +201,19 @@ require("lazy").setup({
         })
 
     end
-  },
+  }),
 
+  fork('mason.nvim', 'cb8445f8ce85d957416c106b780efd51c6298f89', -- 2026-04-27
   {
-    'williamboman/mason.nvim',
     build = ':MasonUpdate',
     config = function()
       require('mason').setup()
     end,
-  },
+  }),
 
+  fork('mason-lspconfig.nvim', '0c2823e0418f3d9230ff8b201c976e84de1cb401', -- 2026-04-23
   {
-    'williamboman/mason-lspconfig.nvim',
-    dependencies = { 'williamboman/mason.nvim' },
+    dependencies = { fork('mason.nvim', 'cb8445f8ce85d957416c106b780efd51c6298f89') }, -- 2026-04-27
     config = function()
       require('mason-lspconfig').setup {
         ensure_installed = {
@@ -212,14 +222,14 @@ require("lazy").setup({
         },
       }
     end
-  },
+  }),
 
+  fork('nvim-lspconfig', '31026a13eefb20681124706a79fc1df6bf11ab27', -- 2026-04-30
   {
-    'neovim/nvim-lspconfig',
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'hrsh7th/cmp-nvim-lsp',
+      fork('mason.nvim', 'cb8445f8ce85d957416c106b780efd51c6298f89'), -- 2026-04-27
+      fork('mason-lspconfig.nvim', '0c2823e0418f3d9230ff8b201c976e84de1cb401'), -- 2026-04-23
+      fork('cmp-nvim-lsp', 'cbc7b02bb99fae35cb42f514762b89b5126651ef'), -- 2025-11-13
     },
     config = function()
       local opts = { noremap = true, silent = true }
@@ -230,16 +240,26 @@ require("lazy").setup({
       vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,   opts)
       vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
       vim.keymap.set('n', 'K',  vim.lsp.buf.hover,            opts)
-    end,
-  },
 
+      -- Enable inlay hints
+      -- vim.api.nvim_create_autocmd('LspAttach', {
+      --   callback = function(args)
+      --     local client = vim.lsp.get_client_by_id(args.data.client_id)
+      --     if client and client.server_capabilities.inlayHintProvider then
+      --       vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+      --     end
+      --   end,
+      -- })
+    end,
+  }),
+
+  fork('nvim-cmp', 'a1d504892f2bc56c2e79b65c6faded2fd21f3eca', -- 2026-03-25
   {
-    'hrsh7th/nvim-cmp',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'saadparwaiz1/cmp_luasnip',
-      'L3MON4D3/LuaSnip',
-      'onsails/lspkind.nvim',
+      fork('cmp-nvim-lsp', 'cbc7b02bb99fae35cb42f514762b89b5126651ef'), -- 2025-11-13
+      fork('cmp_luasnip', '98d9cb5c2c38532bd9bdb481067b20fea8f32e90'), -- 2024-11-04
+      fork('LuaSnip', 'a62e1083a3cfe8b6b206e7d3d33a51091df25357'), -- 2026-04-05
+      fork('lspkind.nvim', 'c7274c48137396526b59d86232eabcdc7fed8a32'), -- 2026-01-29
     },
     config = function()
       local cmp     = require('cmp')
@@ -277,10 +297,10 @@ require("lazy").setup({
         },
       })
     end,
-  },
+  }),
 
+  fork('nvim-bqf', 'c282a62bec6c0621a1ef5132aa3f4c9fc4dcc2c7', -- 2026-04-02
   {
-    'kevinhwang91/nvim-bqf',
     ft = 'qf',
     opts = {
       auto_enable  = true,
@@ -290,7 +310,7 @@ require("lazy").setup({
         openc = '<CR>' -- Close preview by enter
       },
     }
-  },
+  }),
 
 
   -- DEPRECATED: coc.nvim
@@ -315,8 +335,8 @@ require("lazy").setup({
   -- },
 
   -- vim-submode
+  fork('vim-submode', 'd29de4f55c40a7a03af1d8134453a703d6affbd2', -- 2017-07-10
   {
-    'kana/vim-submode',
     config = function()
       vim.cmd [[
       call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
@@ -329,28 +349,28 @@ require("lazy").setup({
       call submode#map('winsize', 'n', '', '-', '<C-w>+')
       ]]
     end
-  },
+  }),
 
   -- fzf
+  fork('fzf', 'b4a86a9c8a688159131a27b6ec9dbce72ec11573', -- 2026-05-02
   {
-    'junegunn/fzf',
     build = function()
       vim.cmd [[ call fzf#install() ]]
     end
-  },
+  }),
+  fork('fzf.vim', 'b9624aa012ddcbae9e79964bfd30cc1fbe3cf263', -- 2026-04-10
   {
-    'junegunn/fzf.vim',
     config = function()
       vim.cmd [[
         nnoremap <C-p> :Files<CR>
         nnoremap ,<C-p> :Rg<CR>
       ]]
     end
-  },
+  }),
 
   -- Lightline
+  fork('lightline.vim', '6c283f8df85aa7219fa4096a6ed4ff45d48aa9e1', -- 2026-04-13
   {
-    'itchyny/lightline.vim',
     config = function()
       vim.cmd [[
         set laststatus=2
@@ -361,9 +381,9 @@ require("lazy").setup({
               \ 'subseparator': { 'left': "", 'right': "" },
               \ 'active': {
               \   'left': [
-              \							['mode', 'paste'], 
-              \							['gitgutter', 'fugitive', 'filename'] 
-              \						]
+              \     ['mode', 'paste'], 
+              \     ['gitgutter', 'fugitive', 'filename'] 
+              \   ]
               \ },
               \ 'component_function': {
               \		'gitgutter': 'MyGitGutter'
@@ -371,13 +391,14 @@ require("lazy").setup({
               \ }
       ]]
     end
-  },
+  }),
 
-  'kyazdani42/nvim-web-devicons',
+  fork('nvim-web-devicons', '4fc505ac7bd7692824a142e96e5f529c133862f8'), -- 2026-04-28
 
   -- vim-quickhl
+  fork('vim-quickhl', 'be1f44169c3fdee3beab629e83380515da03835e', -- 2021-09-01
   {
-    't9md/vim-quickhl', config = function()
+    config = function()
       vim.cmd [[
       " Highlight the selected word
       nmap <Space>m <Plug>(quickhl-manual-this)
@@ -387,17 +408,17 @@ require("lazy").setup({
       nmap <Space>M <Plug>(quickhl-manual-reset)
       ]]
     end
-  },
+  }),
 
   -- vim-toml
-  'cespare/vim-toml',
+  fork('vim-toml', 'da051b7c23bad3c52d18886203c594739780ec09'), -- 2026-03-03
 
   -- OpenCL
-  'petRUShka/vim-opencl',
+  fork('vim-opencl', '7668b018fe9461c6b51e0b736ed84aa84d6bafce'), -- 2018-06-13
 
   -- TeX
+  fork('vimtex', '97e11bd4f56d46a87f8593d6ccb27820e19c4ab0', -- 2026-05-01
   {
-    'lervag/vimtex',
     config = function()
       vim.cmd [[
       let g:vimtex_compiler_latexmk = { 'continuous' : 0, 'build_dir' : 'aux' }
@@ -411,40 +432,40 @@ require("lazy").setup({
       augroup END
       ]]
     end
-  },
+  }),
 
   -- PlantUML
+  fork('plantuml-syntax', '9d4900aa16674bf5bb8296a72b975317d573b547', -- 2024-08-26
   {
-    'aklt/plantuml-syntax',
     config = function()
       vim.cmd [[ au BufRead,BufNewFile *.puml set filetype=plantuml ]]
     end
-  },
+  }),
 
   -- LLVM TableGen
   -- { 'antiagainst/vim-tablegen', ft = 'tablegen' }
   -- vim.cmd [[ au BufRead,BufNewFile *.td set filetype=tablegen ]]
 
   -- LLVM IR
-  'rhysd/vim-llvm',
+  fork('vim-llvm', '05ccc57d98398bddbbd71789c21914383fc9ad45'), -- 2025-12-28
 
   -- SATySFi
-  'qnighy/satysfi.vim',
+  fork('satysfi.vim', 'c11dc636ce2987bf122cbd6d488f40d98909a2df'), -- 2021-09-18
 
   -- Rainbow parentheses
+  fork('rainbow', '76ca1a20aa42edb5c65c19029968aad4625790dc', -- 2024-07-27
   {
-    'luochen1990/rainbow',
     config = function()
       vim.cmd [[ let g:rainbow_active = 1 ]]
     end
-  },
+  }),
 
   -- vim-simple-align
-  'kg8m/vim-simple-align',
+  fork('vim-simple-align', '89b2d815034b7b25c9234449957677276aa3e25f'), -- 2025-05-24
 
   -- Formatter
+  fork('conform.nvim', 'dca1a190aa85f9065979ef35802fb77131911106', -- 2026-04-22
   {
-    'stevearc/conform.nvim',
     event = { "BufReadPre", "BufNewFile" },
     cmd = { "ConformInfo" },
     config = function()
@@ -466,14 +487,14 @@ require("lazy").setup({
         vim.cmd("write")
       end, { noremap = true, desc = "Format and save" })
     end,
-  },
+  }),
 
   -- vim-fugitive (e.g. :Gdiff)
-  'tpope/vim-fugitive',
+  fork('vim-fugitive', '3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0'), -- 2026-03-07
 
   -- gitsigns
+  fork('gitsigns.nvim', 'dd3f588bacbeb041be6facf1742e42097f62165d', -- 2026-05-01
   {
-    'lewis6991/gitsigns.nvim',
     config = function()
         require('gitsigns').setup {
             signs = {
@@ -525,30 +546,30 @@ require("lazy").setup({
             },
         }
     end
-  },
+  }),
 
-  'rhysd/github-complete.vim',
-  'Shougo/vimproc',
+  fork('github-complete.vim', 'ba1ccc89e80c40f42b071337c6914006ebe0af03'), -- 2020-10-26
+  -- { 'maekawatoshiki/vimproc.vim', name = 'vimproc', commit = '63a4ce0768c7af434ac53d37bdc1e7ff7fd2bece' }, -- 2024-09-04
 
   -- Gist
-  'mattn/vim-gist',
-  'mattn/webapi-vim',
+  fork('vim-gist', 'fd55721a8f7c2a7c23d2e704405047e03d6f95f6'), -- 2026-04-11
+  fork('webapi-vim', 'c7eec04aad31e1665164d8292d0ec8b5c3cc5a57'), -- 2026-03-27
 
   -- Rust
-  'rust-lang/rust.vim',
+  fork('rust.vim', '889b9a7515db477f4cb6808bef1769e53493c578'), -- 2022-11-27
 
+  fork('hop.nvim', 'dcd111def98bc925a608dd311525dad96cdb0f24', -- 2025-03-27
   {
-    'maekawatoshiki/hop.nvim',
     config = function()
       require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
       vim.cmd [[ 
         nnoremap <silent> H :lua require'hop'.hint_patterns({}, vim.fn['getreg']('/'))<CR>
       ]]
     end
-  },
+  }),
 
   -- Auto detect indent settings
-  'tpope/vim-sleuth'
+  fork('vim-sleuth', 'be69bff86754b1aa5adcbb527d7fcd1635a84080') -- 2024-09-19
 })
 
 vim.cmd [[
